@@ -56,3 +56,4 @@ $route['translate_uri_dashes'] = FALSE;
 $route['data-tweet'] = 'welcome/VScrapping';
 $route['data-latih'] = 'welcome/VDataLatih';
 $route['data-uji'] = 'welcome/VDataUji';
+$route['confusion-matrix'] = 'welcome/VCMatrix';

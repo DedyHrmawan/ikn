@@ -39,6 +39,14 @@ class Welcome extends CI_Controller {
 		$data = array(
 			'title' => 'Data Uji',
           );
-		$this->template->admin('admin/VdataUji',$data );
+		$this->template->admin('admin/VDataUji',$data );
+	}
+
+	public function VCMatrix()
+	{
+		$data = array(
+			'title' => 'Confusion Matrix',
+          );
+		$this->template->admin('admin/VCMatrix',$data );
 	}
 }
