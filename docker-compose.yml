@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: ./.docker/php
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 8000:80
+
+  db:
+    image: mysql:8.2.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ikn_naive_bayes
+      MYSQL_USER: ikn_naive_bayes
+      MYSQL_PASSWORD: ikn_naive_bayes
+    ports:
+      - 3306:3306
