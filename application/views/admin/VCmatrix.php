@@ -82,13 +82,13 @@
 				<div class="card mb-5 mb-xl-8">
 					<div class="card-header border-0 pt-5">
 						<h3 class="card-title align-items-start flex-column">
-							<span class="card-label fw-bolder fs-3 mb-1">Data Latih</span>
+							<span class="card-label fw-bolder fs-3 mb-1">Hasil Sentimen IKN</span>
 						</h3>
-						<div class="card-toolbar">
+						<!-- <div class="card-toolbar">
 							<a href="#" class="btn btn-primary"
 								title="Buat semua data pada tabel menjadi data uji atau data latih !">Set Data Latih
 								!</a>
-						</div>
+						</div> -->
 					</div>
 					<div class="card-body py-3">
 						<table class="table table-rounded table-row-bordered table-row-gray-300 align-middle gs-0 gy-3"

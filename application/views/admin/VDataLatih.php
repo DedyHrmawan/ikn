@@ -86,7 +86,7 @@
 						</h3>
 						<div class="card-toolbar">
 							<a href="#" class="btn btn-primary"
-								title="Buat semua data pada tabel menjadi data uji atau data latih !">Set Data Latih
+								title="Buat semua data pada tabel menjadi data uji atau data latih !">Preprocessing 
 								!</a>
 						</div>
 					</div>
