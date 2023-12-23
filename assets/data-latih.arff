@@ -1,0 +1,8 @@
+@relation tweet
+@attribute requirement string
+@attribute class {netral, positif, negatif}
+
+@data
+'ini adalah sentimen netral',netral
+'ini adalah sentimen positif',positif
+'ini adalah sentimen negatif',negatif
