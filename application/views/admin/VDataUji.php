@@ -67,14 +67,16 @@
 							<span class="card-label fw-bolder fs-3 mb-1">Data Uji</span>
 						</h3>
 						<div class="card-toolbar">
-							<a href="<?= base_url('Welcome/exportDataUji') ?>" class="btn btn-danger mx-2" title="Download file .arff data latih !"><span class="svg-icon svg-icon-muted svg-icon-2x"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<a href="<?= base_url('Welcome/exportDataUji') ?>" class="btn btn-danger mx-2" title="Download file .arff data uji !"><span class="svg-icon svg-icon-muted svg-icon-2x"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path opacity="0.3" d="M19 15C20.7 15 22 13.7 22 12C22 10.3 20.7 9 19 9C18.9 9 18.9 9 18.8 9C18.9 8.7 19 8.3 19 8C19 6.3 17.7 5 16 5C15.4 5 14.8 5.2 14.3 5.5C13.4 4 11.8 3 10 3C7.2 3 5 5.2 5 8C5 8.3 5 8.7 5.1 9H5C3.3 9 2 10.3 2 12C2 13.7 3.3 15 5 15H19Z" fill="currentColor" />
 										<path d="M13 17.4V12C13 11.4 12.6 11 12 11C11.4 11 11 11.4 11 12V17.4H13Z" fill="currentColor" />
 										<path opacity="0.3" d="M8 17.4H16L12.7 20.7C12.3 21.1 11.7 21.1 11.3 20.7L8 17.4Z" fill="currentColor" />
 									</svg>
 								</span>Download .arff</a>
-							<a href="#" class="btn btn-primary" title="Buat semua data pada tabel menjadi data uji atau data latih !">Hitung Confusion Matrix
+							<a href="#" class="btn btn-primary" title="Proses untuk menghitung confusion matrix !">Hitung Confusion Matrix
 								!</a>
+							<!-- <a href="#" class="btn btn-primary" title="Buat semua data pada tabel menjadi data uji atau data latih !">Tambah Data
+								!</a> -->
 						</div>
 					</div>
 					<div class="card-body py-3">
@@ -107,81 +109,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
-
-
-<!-- Modal Edit Data Latih-->
-<div class="modal fade" id="mdlEditDataLatih" tabindex="-1" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="mb-3">Edit Kelas</h3>
-
-				<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-					<span class="svg-icon svg-icon-muted svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-							<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-							<rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="currentColor" />
-							<rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="currentColor" />
-						</svg></span>
-				</div>
-			</div>
-
-			<div class="modal-body">
-				<form action="<?= site_url('') ?>" method="post">
-					<div class="d-flex flex-column mb-8 fv-row">
-						<label class="d-flex align-items-center fs-6 fw-bold mb-2">
-							<span class="required">Tweet</span>
-						</label>
-						<textarea type="text" class="form-control form-control-solid" name="" id="" cols="15" rows="5" required>Kini klausul rilis Dembele tidak lagi €50 juta dan sekarang €100 juta</textarea>
-					</div>
-					<div class="d-flex flex-column mb-8 fv-row">
-						<label class="d-flex align-items-center fs-6 fw-bold mb-2">
-							<span class="required">Kelas</span>
-						</label>
-						<select class="form-select" id="" name="" aria-label="Pilih Kelas !" required>
-							<option value="1">Positif</option>
-							<option value="2">Negatif</option>
-						</select>
-					</div>
-			</div>
-
-			<div class="modal-footer">
-				<input type="hidden" id="editIdKelas" name="id_kelas">
-				<button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-				<button type="submit" class="btn btn-primary">Simpan</button>
-			</div>
-			</form>
-		</div>
-	</div>
-</div>
-
-<!-- Modal Hapus Kelas-->
-<div class="modal fade" id="mdlDelDataLatih" tabindex="-1" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="mb-3">Hapus Kelas</h3>
-
-				<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-					<span class="svg-icon svg-icon-muted svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-							<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-							<rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="currentColor" />
-							<rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="currentColor" />
-						</svg></span>
-				</div>
-			</div>
-			<form action="<?= site_url('data-kelas/deleteKelas') ?>" method="post">
-				<div class="modal-body">
-					<p>Apakah anda yakin ingin menghapus Kelas tersebut ?</p>
-				</div>
-				<div class="modal-footer">
-					<input type="hidden" id="deleteIdKelas" name="id_kelas">
-					<button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-					<button type="submit" class="btn btn-primary">Hapus</button>
-				</div>
-			</form>
 		</div>
 	</div>
 </div>

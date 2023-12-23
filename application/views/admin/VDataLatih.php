@@ -162,7 +162,7 @@
 						</label>
 						<select class="form-select" id="" name="" aria-label="Pilih Kelas !" required>
 							<option value="0">Netral</option>
-							<option value="1">Negatif</option>
+							<option value="1">Positif</option>
 							<option value="2">Negatif</option>
 						</select>
 					</div>
