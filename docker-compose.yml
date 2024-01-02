@@ -21,3 +21,9 @@ services:
       MYSQL_PASSWORD: ikn_naive_bayes
     ports:
       - 3306:3306
+    volumes:
+      - "mysql:/var/lib/mysql"
+
+volumes:
+  mysql:
+    driver: local
