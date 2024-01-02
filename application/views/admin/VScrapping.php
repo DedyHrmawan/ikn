@@ -76,60 +76,63 @@
 	</div>
 </div>
 
-<?php $this->load->view('admin/template/footer') ?>
 <script>
-	$('#tabelScrapping').dataTable({
-		"language": {
-			"lengthMenu": "Tampilkan _MENU_",
-			"zeroRecords": "Tidak ada data",
-			"infoEmpty": "Tidak ada data",
-			"infoFiltered": "(filtered from _MAX_ total records)",
-			"search": "Cari",
+	document.addEventListener('DOMContentLoaded', function() {
+		$('#tabelScrapping').dataTable({
+			"language": {
+				"lengthMenu": "Tampilkan _MENU_",
+				"zeroRecords": "Tidak ada data",
+				"infoEmpty": "Tidak ada data",
+				"infoFiltered": "(filtered from _MAX_ total records)",
+				"search": "Cari",
 
-		},
-		"dom": "<'row'" +
-			"<'col-sm-6 d-flex align-items-center justify-content-start'l>" +
-			"<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-			">" +
-			"<'table-responsive'tr>" +
+			},
+			"dom": `
+				<'row'
+					<'col-sm-6 d-flex align-items-center justify-content-start'l>
+					<'col-sm-6 d-flex align-items-center justify-content-end'f>
+				>
+				
+				<'table-responsive'tr>
 
-			"<'row'" +
-			"<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-			"<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-			">"
+				<'row'
+					<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>
+					<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>
+				>`
+		});
+
+		$('#simpan').click(function() {
+			const dnIds = $('.checkItem:checkbox:checked').map((_, elm) => elm.value).get()
+			$('#simpan_id').val(dnIds.toString())
+			$('#formSimpan').submit();
+		})
+
+		$('#checkAll').change(function() {
+			const isChecked = $(this).prop('checked')
+			if (isChecked) {
+				$('.checkItem').prop('checked', true)
+			} else {
+				$('.checkItem').prop('checked', false)
+			}
+			buttonMultipleAvailable()
+		})
+		$('.checkItem').change(function() {
+			buttonMultipleAvailable()
+		})
+		const buttonMultipleAvailable = () => {
+			const isChecked = $('.checkItem:checkbox:checked').prop('checked')
+			if (isChecked) {
+				$('.simpan').attr('disabled', false)
+			} else {
+				$('.simpan').attr('disabled', true)
+			}
+		}
+
+		function showAlert() {
+			if ($("#myAlert").find("div#myAlert2").length == 0) {
+				$("#myAlert").append("<div class='alert alert-success alert-dismissable' id='myAlert2'> <button type='button' class='close' data-dismiss='alert'  aria-hidden='true'>&times;</button> Success! message sent successfully.</div>");
+			}
+			$("#myAlert").css("display", "");
+		}
 	});
-
-	$('#simpan').click(function() {
-		const dnIds = $('.checkItem:checkbox:checked').map((_, elm) => elm.value).get()
-		$('#simpan_id').val(dnIds.toString())
-		$('#formSimpan').submit();
-	})
-
-	$('#checkAll').change(function() {
-		const isChecked = $(this).prop('checked')
-		if (isChecked) {
-			$('.checkItem').prop('checked', true)
-		} else {
-			$('.checkItem').prop('checked', false)
-		}
-		buttonMultipleAvailable()
-	})
-	$('.checkItem').change(function() {
-		buttonMultipleAvailable()
-	})
-	const buttonMultipleAvailable = () => {
-		const isChecked = $('.checkItem:checkbox:checked').prop('checked')
-		if (isChecked) {
-			$('.simpan').attr('disabled', false)
-		} else {
-			$('.simpan').attr('disabled', true)
-		}
-	}
-
-	function showAlert() {
-		if ($("#myAlert").find("div#myAlert2").length == 0) {
-			$("#myAlert").append("<div class='alert alert-success alert-dismissable' id='myAlert2'> <button type='button' class='close' data-dismiss='alert'  aria-hidden='true'>&times;</button> Success! message sent successfully.</div>");
-		}
-		$("#myAlert").css("display", "");
-	}
 </script>
