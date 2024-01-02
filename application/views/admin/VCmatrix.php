@@ -2,7 +2,7 @@
 	<div id="kt_content_container" class="container-xxl">
 		<div class="row">
 			<div class="col-xl-3">
-				<span class="card bg-body hoverablecard-xl-stretch mb-xl-8">
+				<span class="card bg-gray-300 hoverable card-xl-stretch mb-xl-8">
 					<div class="card-body">
 						<span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -13,13 +13,13 @@
 								<rect x="3" y="13" width="3" height="6" rx="1.5" fill="currentColor" />
 							</svg>
 						</span>
-						<div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">250</div>
-						<div class="fw-bold text-gray-400">Accuracy</div>
+						<div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">90%</div>
+						<div class="fw-bold text-gray-400">Precision</div>
 					</div>
 				</span>
 			</div>
 			<div class="col-xl-3">
-				<span class="card bg-dark hoverable card-xl-stretch mb-xl-8">
+				<span class="card bg-success hoverable card-xl-stretch mb-xl-8">
 					<div class="card-body">
 						<span class="svg-icon svg-icon-gray-100 svg-icon-3x ms-n1">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -35,8 +35,8 @@
 									fill="currentColor" />
 							</svg>
 						</span>
-						<div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">250</div>
-						<div class="fw-bold text-gray-100">Precision</div>
+						<div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">90%</div>
+						<div class="fw-bold text-gray-100">Accuracy</div>
 					</div>
 				</span>
 			</div>
@@ -54,7 +54,7 @@
 									fill="currentColor" />
 							</svg>
 						</span>
-						<div class="text-white fw-bolder fs-2 mb-2 mt-5">4</div>
+						<div class="text-white fw-bolder fs-2 mb-2 mt-5">90%</div>
 						<div class="fw-bold text-white">Recall</div>
 					</div>
 				</span>
@@ -73,7 +73,7 @@
 									fill="currentColor" />
 							</svg>
 						</span>
-						<div class="text-white fw-bolder fs-2 mb-2 mt-5">504</div>
+						<div class="text-white fw-bolder fs-2 mb-2 mt-5">90%</div>
 						<div class="fw-bold text-white">F-Measure</div>
 					</div>
 				</a>
@@ -82,13 +82,13 @@
 				<div class="card mb-5 mb-xl-8">
 					<div class="card-header border-0 pt-5">
 						<h3 class="card-title align-items-start flex-column">
-							<span class="card-label fw-bolder fs-3 mb-1">Data Latih</span>
+							<span class="card-label fw-bolder fs-3 mb-1">Hasil Sentimen IKN</span>
 						</h3>
-						<div class="card-toolbar">
+						<!-- <div class="card-toolbar">
 							<a href="#" class="btn btn-primary"
 								title="Buat semua data pada tabel menjadi data uji atau data latih !">Set Data Latih
 								!</a>
-						</div>
+						</div> -->
 					</div>
 					<div class="card-body py-3">
 						<table class="table table-rounded table-row-bordered table-row-gray-300 align-middle gs-0 gy-3"
@@ -96,13 +96,30 @@
 							<thead>
 								<tr class="fw-bolder text-muted">
 									<th>Kelas</th>
-									<th>Accuracy</th>
 									<th>Precision</th>
+									<th>Accuracy</th>
 									<th>Recall</th>
 									<th>F-Measure</th>
 								</tr>
 							</thead>
 							<tbody>
+								<tr>
+									<td class="text-dark fw-bolder text-hover-primary fs-6">
+										Negatif
+									</td>
+									<td class="text-dark fw-bolder text-hover-primary fs-6">
+										100%
+									</td>
+									<td class="text-dark fw-bolder text-hover-primary fs-6">
+										100%
+									</td>
+									<td class="text-dark fw-bolder text-hover-primary fs-6">
+										100%
+									</td>
+									<td class="text-dark fw-bolder text-hover-primary fs-6">
+										100%
+									</td>
+								</tr>
 								<tr>
 									<td class="text-dark fw-bolder text-hover-primary fs-6">
 										Positif
@@ -122,7 +139,7 @@
 								</tr>
 								<tr>
 									<td class="text-dark fw-bolder text-hover-primary fs-6">
-										Negatif
+										Netral
 									</td>
 									<td class="text-dark fw-bolder text-hover-primary fs-6">
 										100%
@@ -142,90 +159,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
-
-
-<!-- Modal Edit Data Latih-->
-<div class="modal fade" id="mdlEditDataLatih" tabindex="-1" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="mb-3">Edit Kelas</h3>
-
-				<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
-					aria-label="Close">
-					<span class="svg-icon svg-icon-muted svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg"
-							width="24" height="24" viewBox="0 0 24 24" fill="none">
-							<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-							<rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
-								fill="currentColor" />
-							<rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
-								fill="currentColor" />
-						</svg></span>
-				</div>
-			</div>
-
-			<div class="modal-body">
-				<form action="<?= site_url('') ?>" method="post">
-					<div class="d-flex flex-column mb-8 fv-row">
-						<label class="d-flex align-items-center fs-6 fw-bold mb-2">
-							<span class="required">Tweet</span>
-						</label>
-						<textarea type="text" class="form-control form-control-solid" name="" id="" cols="15" rows="5"
-							required>Kini klausul rilis Dembele tidak lagi €50 juta dan sekarang €100 juta</textarea>
-					</div>
-					<div class="d-flex flex-column mb-8 fv-row">
-						<label class="d-flex align-items-center fs-6 fw-bold mb-2">
-							<span class="required">Kelas</span>
-						</label>
-						<select class="form-select" id="" name="" aria-label="Pilih Kelas !" required>
-							<option value="1">Positif</option>
-							<option value="2">Negatif</option>
-						</select>
-					</div>
-			</div>
-
-			<div class="modal-footer">
-				<input type="hidden" id="editIdKelas" name="id_kelas">
-				<button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-				<button type="submit" class="btn btn-primary">Simpan</button>
-			</div>
-			</form>
-		</div>
-	</div>
-</div>
-
-<!-- Modal Hapus Kelas-->
-<div class="modal fade" id="mdlDelDataLatih" tabindex="-1" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="mb-3">Hapus Kelas</h3>
-
-				<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
-					aria-label="Close">
-					<span class="svg-icon svg-icon-muted svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg"
-							width="24" height="24" viewBox="0 0 24 24" fill="none">
-							<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-							<rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)"
-								fill="currentColor" />
-							<rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)"
-								fill="currentColor" />
-						</svg></span>
-				</div>
-			</div>
-			<form action="<?= site_url('data-kelas/deleteKelas') ?>" method="post">
-				<div class="modal-body">
-					<p>Apakah anda yakin ingin menghapus Kelas tersebut ?</p>
-				</div>
-				<div class="modal-footer">
-					<input type="hidden" id="deleteIdKelas" name="id_kelas">
-					<button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-					<button type="submit" class="btn btn-primary">Hapus</button>
-				</div>
-			</form>
 		</div>
 	</div>
 </div>

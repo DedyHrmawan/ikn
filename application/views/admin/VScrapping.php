@@ -8,8 +8,8 @@
 							<span class="card-label fw-bolder fs-3 mb-1">Data Tweet</span>
 						</h3>
 						<div class="card-toolbar">
-							<a href="<?= site_url("data-tweet") ?>" class="btn btn-primary mx-2">Ambil Data </a>
-							<form id="" action="<?= site_url('')?>" method="POST">
+							<a href="<?= site_url("data-tweet") ?>" class="btn btn-primary mx-2" id="myAlert">Ambil Data </a>
+							<form id="" action="<?= site_url('') ?>" method="POST">
 								<!-- <input type="hidden" id="" name=""> -->
 								<button type="submit" class="btn btn-primary mx-2 simpan" disabled>Simpan Data Latih</button>
 								<button type="submit" class="btn btn-primary simpan" disabled>Simpan Data Uji</button>
@@ -17,8 +17,7 @@
 						</div>
 					</div>
 					<div class="card-body py-3">
-						<table class="table table-rounded table-row-bordered table-row-gray-300 align-middle gs-0 gy-3"
-							id="tabelScrapping">
+						<table class="table table-rounded table-row-bordered table-row-gray-300 align-middle gs-0 gy-3" id="tabelScrapping">
 							<thead>
 								<tr class="fw-bolder text-muted">
 									<th>No</th>
@@ -39,10 +38,8 @@
 										1
 									</td>
 									<td>
-										<div class="custom-control custom-checkbox" onclick="buttonMultipleAvailable()"
-											style="text-align:center;">
-											<input type="checkbox" class="custom-control-input checkItem" id="1"
-												value="1">
+										<div class="custom-control custom-checkbox" onclick="buttonMultipleAvailable()" style="text-align:center;">
+											<input type="checkbox" class="custom-control-input checkItem" id="1" value="1">
 											<label class="custom-control-label" for="1"></label>
 										</div>
 									</td>
@@ -58,10 +55,8 @@
 										2
 									</td>
 									<td>
-										<div class="custom-control custom-checkbox" onclick="buttonMultipleAvailable()"
-											style="text-align:center;">
-											<input type="checkbox" class="custom-control-input checkItem" id="2"
-												value="2">
+										<div class="custom-control custom-checkbox" onclick="buttonMultipleAvailable()" style="text-align:center;">
+											<input type="checkbox" class="custom-control-input checkItem" id="2" value="2">
 											<label class="custom-control-label" for="2"></label>
 										</div>
 									</td>
@@ -104,13 +99,13 @@
 			">"
 	});
 
-	$('#simpan').click(function () {
+	$('#simpan').click(function() {
 		const dnIds = $('.checkItem:checkbox:checked').map((_, elm) => elm.value).get()
 		$('#simpan_id').val(dnIds.toString())
 		$('#formSimpan').submit();
 	})
 
-	$('#checkAll').change(function () {
+	$('#checkAll').change(function() {
 		const isChecked = $(this).prop('checked')
 		if (isChecked) {
 			$('.checkItem').prop('checked', true)
@@ -119,7 +114,7 @@
 		}
 		buttonMultipleAvailable()
 	})
-	$('.checkItem').change(function () {
+	$('.checkItem').change(function() {
 		buttonMultipleAvailable()
 	})
 	const buttonMultipleAvailable = () => {
@@ -131,4 +126,10 @@
 		}
 	}
 
+	function showAlert() {
+		if ($("#myAlert").find("div#myAlert2").length == 0) {
+			$("#myAlert").append("<div class='alert alert-success alert-dismissable' id='myAlert2'> <button type='button' class='close' data-dismiss='alert'  aria-hidden='true'>&times;</button> Success! message sent successfully.</div>");
+		}
+		$("#myAlert").css("display", "");
+	}
 </script>

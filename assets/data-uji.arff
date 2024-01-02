@@ -1,0 +1,6 @@
+@relation tweet
+@attribute requirement string
+@attribute class {netral,positif,negatif}
+
+@data
+'diisi dengan sentimen data uji',?
