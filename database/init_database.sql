@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS datasets (
 	id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	sentiment VARCHAR(255) NOT NULL,
-	class VARCHAR(50) NOT NULL,
-	expected_result VARCHAR(50) NOT NULL,
+	class VARCHAR(50),
+	expected_result VARCHAR(50),
 	prediction VARCHAR(255),
 	created_at TIMESTAMP NOT NULL,
 	updated_at TIMESTAMP NOT NULL
