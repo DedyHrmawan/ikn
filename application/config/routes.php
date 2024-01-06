@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -49,11 +49,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome/VScrapping';
+$route['default_controller'] = 'scrapping/index';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['data-tweet'] = 'welcome/VScrapping';
+$route['data-tweet'] = 'scrapping/index';
 $route['data-latih'] = 'welcome/VDataLatih';
 $route['data-uji'] = 'welcome/VDataUji';
 $route['confusion-matrix'] = 'welcome/VCMatrix';

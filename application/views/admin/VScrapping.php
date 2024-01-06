@@ -20,53 +20,39 @@
 						<table class="table table-rounded table-row-bordered table-row-gray-300 align-middle gs-0 gy-3" id="tabelScrapping">
 							<thead>
 								<tr class="fw-bolder text-muted">
-									<th>No</th>
 									<th>
-										<div class="custom-control custom-checkbox" style="text-align:center;">
+										<div class="custom-control custom-checkbox d-inline-block" style="text-align:center;">
 											<input type="checkbox" class="custom-control-input" id="checkAll">
 											<label class="custom-control-label" for="checkAll"></label>
 										</div>
 									</th>
+									<th>No</th>
 									<th>Tweet</th>
 									<th>Tanggal</th>
 								</tr>
 							</thead>
 							<tbody>
 
-								<tr>
-									<td class="text-dark fw-bolder text-hover-primary fs-6">
-										1
-									</td>
-									<td>
-										<div class="custom-control custom-checkbox" onclick="buttonMultipleAvailable()" style="text-align:center;">
-											<input type="checkbox" class="custom-control-input checkItem" id="1" value="1">
-											<label class="custom-control-label" for="1"></label>
-										</div>
-									</td>
-									<td class="text-dark fw-bolder text-hover-primary fs-6">
-										Kini klausul rilis Dembele tidak lagi €50 juta dan sekarang €100 juta.
-									</td>
-									<td>
-										2023-06-09
-									</td>
-								</tr>
-								<tr>
-									<td class="text-dark fw-bolder text-hover-primary fs-6">
-										2
-									</td>
-									<td>
-										<div class="custom-control custom-checkbox" onclick="buttonMultipleAvailable()" style="text-align:center;">
-											<input type="checkbox" class="custom-control-input checkItem" id="2" value="2">
-											<label class="custom-control-label" for="2"></label>
-										</div>
-									</td>
-									<td class="text-dark fw-bolder text-hover-primary fs-6">
-										Kini klausul rilis Dembele tidak lagi €50 juta dan sekarang €100 juta.
-									</td>
-									<td>
-										2023-06-09
-									</td>
-								</tr>
+								<?php foreach ($tweets as $index => $item) { ?>
+									<tr>
+										<td>
+											<div class="custom-control custom-checkbox" onclick="buttonMultipleAvailable()">
+												<input type="checkbox" class="custom-control-input checkItem" id="1" value="1">
+												<label class="custom-control-label" for="1"></label>
+											</div>
+										</td>
+										<td class="text-dark fw-bolder text-hover-primary fs-6">
+											<?= $index + 1 ?>
+										</td>
+										<td class="text-dark fw-bolder text-hover-primary fs-6">
+											<?= $item->tweet ?>
+										</td>
+										<td>
+											<?= $item->created_at ?>
+										</td>
+									</tr>
+								<?php } ?>
+
 							</tbody>
 						</table>
 					</div>
@@ -85,7 +71,6 @@
 				"infoEmpty": "Tidak ada data",
 				"infoFiltered": "(filtered from _MAX_ total records)",
 				"search": "Cari",
-
 			},
 			"dom": `
 				<'row'
@@ -116,9 +101,11 @@
 			}
 			buttonMultipleAvailable()
 		})
+
 		$('.checkItem').change(function() {
 			buttonMultipleAvailable()
 		})
+
 		const buttonMultipleAvailable = () => {
 			const isChecked = $('.checkItem:checkbox:checked').prop('checked')
 			if (isChecked) {
