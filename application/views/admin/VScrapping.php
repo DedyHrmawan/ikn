@@ -2,16 +2,18 @@
 	<div id="kt_content_container" class="container-xxl">
 		<div class="row">
 			<div class="col">
+				<div id="myAlert"></div>
 				<div class="card mb-5 mb-xl-8">
 					<div class="card-header border-0 pt-5">
 						<h3 class="card-title align-items-start flex-column">
 							<span class="card-label fw-bolder fs-3 mb-1">Data Tweet</span>
 						</h3>
 						<div class="card-toolbar">
-							<a href="<?= site_url("data-tweet") ?>" class="btn btn-primary mx-2" id="myAlert">Ambil Data </a>
-							<form id="" action="<?= site_url('') ?>" method="POST">
-								<!-- <input type="hidden" id="" name=""> -->
+							<a href="<?= site_url("data-tweet") ?>" class="btn btn-primary mx-2">Ambil Data </a>
+							<form action="<?= site_url('scrapping/training-dataset') ?>" method="POST" onsubmit="handleOnSubmitAsTrainingDataset(event)">
 								<button type="submit" class="btn btn-primary mx-2 simpan" disabled>Simpan Data Latih</button>
+							</form>
+							<form action="<?= site_url('scrapping/testing-dataset') ?>" method="POST" onsubmit="handleOnSubmitAsTestingDataset(event)">
 								<button type="submit" class="btn btn-primary simpan" disabled>Simpan Data Uji</button>
 							</form>
 						</div>
@@ -22,7 +24,7 @@
 								<tr class="fw-bolder text-muted">
 									<th>
 										<div class="custom-control custom-checkbox d-inline-block" style="text-align:center;">
-											<input type="checkbox" class="custom-control-input" id="checkAll">
+											<input type="checkbox" class="custom-control-input" id="checkAll" value="0">
 											<label class="custom-control-label" for="checkAll"></label>
 										</div>
 									</th>
@@ -37,8 +39,8 @@
 									<tr>
 										<td>
 											<div class="custom-control custom-checkbox" onclick="buttonMultipleAvailable()">
-												<input type="checkbox" class="custom-control-input checkItem" id="1" value="1">
-												<label class="custom-control-label" for="1"></label>
+												<input type="checkbox" class="custom-control-input checkItem" id="<?= $item->id ?>" value="0" data-id="<?= $item->id ?>">
+												<label class="custom-control-label" for="<?= $item->id ?>"></label>
 											</div>
 										</td>
 										<td class="text-dark fw-bolder text-hover-primary fs-6">
@@ -105,21 +107,83 @@
 		$('.checkItem').change(function() {
 			buttonMultipleAvailable()
 		})
-
-		const buttonMultipleAvailable = () => {
-			const isChecked = $('.checkItem:checkbox:checked').prop('checked')
-			if (isChecked) {
-				$('.simpan').attr('disabled', false)
-			} else {
-				$('.simpan').attr('disabled', true)
-			}
-		}
-
-		function showAlert() {
-			if ($("#myAlert").find("div#myAlert2").length == 0) {
-				$("#myAlert").append("<div class='alert alert-success alert-dismissable' id='myAlert2'> <button type='button' class='close' data-dismiss='alert'  aria-hidden='true'>&times;</button> Success! message sent successfully.</div>");
-			}
-			$("#myAlert").css("display", "");
-		}
 	});
+
+	const buttonMultipleAvailable = () => {
+		const isChecked = $('.checkItem:checkbox:checked').prop('checked')
+		if (isChecked) {
+			$('.simpan').attr('disabled', false)
+		} else {
+			$('.simpan').attr('disabled', true)
+		}
+	}
+
+	function showAlert(message, isSuccess = true) {
+		if ($("#myAlert").find("div#myAlert2").length == 0) {
+			$("#myAlert").append(`
+				<div class='alert alert-${isSuccess ? 'success' : 'danger'} alert-dismissible fade show' role='alert' id='myAlert2'>
+					${message}
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			`);
+		}
+	}
+
+	function handleOnSubmitAsTrainingDataset(e) {
+		e.preventDefault();
+
+		if ($('.checkItem:checked').length > 0) {
+			const selectedId = [];
+			$('.checkItem:checked').map((_, e) => {
+				selectedId.push(e.dataset.id)
+			});
+
+			$.ajax({
+					url: e.target.action,
+					method: 'POST',
+					accepts: 'application/json',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						id: selectedId
+					})
+				})
+				.done(function(response) {
+					showAlert('Tweet berhasil ditambahkan sebagai data training!');
+				})
+				.fail(function(xhr, textStatus, errorThrown) {
+					showAlert('Upps, ada kesalahan dalam proses penambahan tweet sebagai data training. Coba lagi lain waktu!', false);
+				});
+		}
+
+	}
+
+	function handleOnSubmitAsTestingDataset(e) {
+		e.preventDefault();
+
+		if ($('.checkItem:checked').length > 0) {
+			const selectedId = [];
+			$('.checkItem:checked').map((_, e) => {
+				selectedId.push(e.dataset.id)
+			});
+			$.ajax({
+					url: e.target.action,
+					method: 'POST',
+					accepts: 'application/json',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						id: selectedId
+					})
+				})
+				.done(function(response) {
+					showAlert('Tweet berhasil ditambahkan sebagai data uji!');
+
+					setTimeout(() => location.reload(true), 1000);
+				})
+				.fail(function(xhr, textStatus, errorThrown) {
+					showAlert('Upps, ada kesalahan dalam proses penambahan tweet sebagai data uji. Coba lagi lain waktu!', false);
+				});
+		}
+	}
 </script>

@@ -19,4 +19,36 @@ class Scrapping extends CI_Controller
 
 		$this->template->admin('admin/VScrapping', $data);
 	}
+
+	public function training_dataset()
+	{
+		$rawPayload = $this->security->xss_clean($this->input->raw_input_stream);
+		$payload = json_decode($rawPayload);
+
+		$selectedId = $payload->id;
+		if (empty($selectedId)) {
+			show_404();
+		}
+
+		$this->tweet_model->makeTweetAs($selectedId, 'Training');
+
+		header('application/json');
+		echo json_encode(['status' => true, 'message' => 'Successfully make tweets as training dataset']);
+	}
+
+	public function testing_dataset()
+	{
+		$rawPayload = $this->security->xss_clean($this->input->raw_input_stream);
+		$payload = json_decode($rawPayload);
+
+		$selectedId = $payload->id;
+		if (empty($selectedId)) {
+			show_404();
+		}
+
+		$this->tweet_model->makeTweetAs($selectedId, 'Testing');
+
+		header('application/json');
+		echo json_encode(['status' => true, 'message' => 'Successfully make tweets as testing dataset']);
+	}
 }

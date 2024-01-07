@@ -8,13 +8,6 @@ class Welcome extends CI_Controller
 		parent::__construct();
 		$this->load->helper('download');
 	}
-	public function VScrapping()
-	{
-		$data = array(
-			'title' => 'Scrapping Data',
-		);
-		$this->template->admin('admin/VScrapping', $data);
-	}
 
 	public function VDataLatih()
 	{
@@ -24,19 +17,20 @@ class Welcome extends CI_Controller
 		$this->template->admin('admin/VDataLatih', $data);
 	}
 
-	public function exportDataLatih(){
-        $namaFile = "data-latih.arff";
-        
-        $separator = ",";
-        
-        header("Content-type: text/plain");
-        header("Content-Disposition: attachment; filename=".$namaFile);
+	public function exportDataLatih()
+	{
+		$namaFile = "data-latih.arff";
 
-        echo "@relation tweet\n@attribute requirement string\n@attribute class {netral, positif, negatif}\n\n@data\n";
-            echo "'ini adalah contoh tweet netral'".$separator."netral\n";            
-            echo "'ini adalah contoh tweet positif'".$separator."positif\n";            
-            echo "'ini adalah contoh tweet negatif'".$separator."negatif\n";            
-    }
+		$separator = ",";
+
+		header("Content-type: text/plain");
+		header("Content-Disposition: attachment; filename=" . $namaFile);
+
+		echo "@relation tweet\n@attribute requirement string\n@attribute class {netral, positif, negatif}\n\n@data\n";
+		echo "'ini adalah contoh tweet netral'" . $separator . "netral\n";
+		echo "'ini adalah contoh tweet positif'" . $separator . "positif\n";
+		echo "'ini adalah contoh tweet negatif'" . $separator . "negatif\n";
+	}
 
 
 	public function VDataUji()
@@ -47,18 +41,19 @@ class Welcome extends CI_Controller
 		$this->template->admin('admin/VDataUji', $data);
 	}
 
-	public function exportDataUji(){
-        $namaFile = "data-uji.arff";
-        
-        $separator = ",";
-        
-        header("Content-type: text/plain");
-        header("Content-Disposition: attachment; filename=".$namaFile);
+	public function exportDataUji()
+	{
+		$namaFile = "data-uji.arff";
 
-        echo "@relation tweet\n@attribute requirement string\n@attribute class {netral, positif, negatif}\n\n@data\n";
-            echo "'ini adalah contoh data uji 1'".$separator."?\n";            
-            echo "'ini adalah contoh data uji 2'".$separator."?\n";            
-    }
+		$separator = ",";
+
+		header("Content-type: text/plain");
+		header("Content-Disposition: attachment; filename=" . $namaFile);
+
+		echo "@relation tweet\n@attribute requirement string\n@attribute class {netral, positif, negatif}\n\n@data\n";
+		echo "'ini adalah contoh data uji 1'" . $separator . "?\n";
+		echo "'ini adalah contoh data uji 2'" . $separator . "?\n";
+	}
 
 	public function VCMatrix()
 	{
