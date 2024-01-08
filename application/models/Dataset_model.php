@@ -3,6 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Dataset_model extends CI_Model
 {
+	const RESULT_LABEL = [
+		"Netral",
+		"Positif",
+		"Negatif"
+	];
 
 	public function __construct()
 	{
@@ -35,8 +40,8 @@ class Dataset_model extends CI_Model
 
 		$statistics = ['Total' => 0];
 		foreach ($results as $item) {
-			if (!$item->expected_result) {
-				$statistics[$item->expected_result] = $item->count;
+			if ($item->expected_result) {
+				$statistics[self::RESULT_LABEL[$item->expected_result]] = $item->count;
 			}
 
 			$statistics['Total'] += $item->count;
@@ -64,8 +69,8 @@ class Dataset_model extends CI_Model
 
 		$statistics = ['Total' => 0];
 		foreach ($results as $item) {
-			if (!$item->expected_result) {
-				$statistics[$item->expected_result] = $item->count;
+			if ($item->expected_result) {
+				$statistics[self::RESULT_LABEL[$item->expected_result]] = $item->count;
 			}
 
 			$statistics['Total'] += $item->count;
