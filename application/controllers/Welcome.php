@@ -9,14 +9,6 @@ class Welcome extends CI_Controller
 		$this->load->helper('download');
 	}
 
-	public function VDataLatih()
-	{
-		$data = array(
-			'title' => 'Data Latih',
-		);
-		$this->template->admin('admin/VDataLatih', $data);
-	}
-
 	public function exportDataLatih()
 	{
 		$namaFile = "data-latih.arff";
@@ -30,15 +22,6 @@ class Welcome extends CI_Controller
 		echo "'ini adalah contoh tweet netral'" . $separator . "netral\n";
 		echo "'ini adalah contoh tweet positif'" . $separator . "positif\n";
 		echo "'ini adalah contoh tweet negatif'" . $separator . "negatif\n";
-	}
-
-
-	public function VDataUji()
-	{
-		$data = array(
-			'title' => 'Data Uji',
-		);
-		$this->template->admin('admin/VDataUji', $data);
 	}
 
 	public function exportDataUji()

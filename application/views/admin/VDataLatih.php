@@ -12,7 +12,7 @@
 								<rect x="3" y="13" width="3" height="6" rx="1.5" fill="currentColor" />
 							</svg>
 						</span>
-						<div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">250</div>
+						<div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5"><?= $statistics['Netral'] ?? 0 ?></div>
 						<div class="fw-bold text-gray-400">Sentimen Netral</div>
 					</div>
 				</span>
@@ -27,7 +27,7 @@
 								<path d="M15 18.6C15 20.3 16.3 21.6 18 21.6C19.7 21.6 21 20.3 21 18.6V12.5C21 12.2 20.6 12 20.3 12.2L19 13.6L17.7 12.3C17.3 11.9 16.7 11.9 16.3 12.3L15 13.6V18.6Z" fill="currentColor" />
 							</svg>
 						</span>
-						<div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">250</div>
+						<div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5"><?= $statistics['Positif'] ?? 0 ?></div>
 						<div class="fw-bold text-gray-100">Sentimen Positif</div>
 					</div>
 				</span>
@@ -41,7 +41,7 @@
 								<path d="M14 6V5H10V6H8V5C8 3.9 8.9 3 10 3H14C15.1 3 16 3.9 16 5V6H14ZM20 15H14V16C14 16.6 13.5 17 13 17H11C10.5 17 10 16.6 10 16V15H4C3.6 15 3.3 14.9 3 14.7V18C3 19.1 3.9 20 5 20H19C20.1 20 21 19.1 21 18V14.7C20.7 14.9 20.4 15 20 15Z" fill="currentColor" />
 							</svg>
 						</span>
-						<div class="text-white fw-bolder fs-2 mb-2 mt-5">250</div>
+						<div class="text-white fw-bolder fs-2 mb-2 mt-5"><?= $statistics['Negatif'] ?? 0 ?></div>
 						<div class="fw-bold text-white">Sentimen Negatif</div>
 					</div>
 				</span>
@@ -55,7 +55,7 @@
 								<path d="M12.9607 10.9128V3.01281C12.9607 2.41281 13.4607 1.91281 14.0607 2.01281C16.0607 2.21281 17.8607 3.11284 19.2607 4.61284C20.6607 6.01284 21.5607 7.91285 21.8607 9.81285C21.9607 10.4129 21.4607 10.9128 20.8607 10.9128H12.9607Z" fill="currentColor" />
 							</svg>
 						</span>
-						<div class="text-white fw-bolder fs-2 mb-2 mt-5">750</div>
+						<div class="text-white fw-bolder fs-2 mb-2 mt-5"><?= $statistics['Total'] ?? 0 ?></div>
 						<div class="fw-bold text-white">Jumlah Data</div>
 					</div>
 				</a>
@@ -89,39 +89,41 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td class="text-dark fw-bolder text-hover-primary fs-6">
-										1
-									</td>
-									<td class="text-dark fw-bolder text-hover-primary fs-6">
-										Kini klausul rilis Dembele tidak lagi €50 juta dan sekarang €100 juta.
-									</td>
-									<td class="text-dark fw-bolder text-hover-primary fs-6">
-										Positif
-									</td>
-									<td class="text-dark fw-bolder text-hover-primary fs-6">
-										2023-06-09
-									</td>
-									<td class="">
-										<a href="" title="Edit Data Latih" data-bs-toggle="modal" data-bs-target="#mdlEditDataLatih" data-id="" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm mdlEditDataLatih m-1">
-											<span class="svg-icon svg-icon-3">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-													<path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor" />
-													<path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor" />
-												</svg>
-											</span>
-										</a>
-										<a href="#" title="Hapus Data Latih" data-bs-toggle="modal" data-bs-target="#mdlDelDataLatih" data-id="" class="btn btn-icon btn-bg-light btn-active-color-primary mdlDelDataLatih btn-sm m-1">
-											<span class="svg-icon svg-icon-3">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-													<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor" />
-													<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor" />
-													<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor" />
-												</svg>
-											</span>
-										</a>
-									</td>
-								</tr>
+								<?php foreach ($datasets as $index => $item) { ?>
+									<tr>
+										<td class="text-dark fw-bolder text-hover-primary fs-6">
+											<?= $index + 1 ?>
+										</td>
+										<td class="text-dark fw-bolder text-hover-primary fs-6">
+											<?= $item->sentiment ?>
+										</td>
+										<td class="text-dark fw-bolder text-hover-primary fs-6">
+											<?= $item->expected_result ?>
+										</td>
+										<td class="text-dark fw-bolder text-hover-primary fs-6">
+											<?= $item->created_at ?>
+										</td>
+										<td class="">
+											<a href="" title="Edit Data Latih" data-bs-toggle="modal" data-bs-target="#mdlEditDataLatih" data-id="" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm mdlEditDataLatih m-1">
+												<span class="svg-icon svg-icon-3">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor" />
+														<path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor" />
+													</svg>
+												</span>
+											</a>
+											<a href="#" title="Hapus Data Latih" data-bs-toggle="modal" data-bs-target="#mdlDelDataLatih" data-id="" class="btn btn-icon btn-bg-light btn-active-color-primary mdlDelDataLatih btn-sm m-1">
+												<span class="svg-icon svg-icon-3">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor" />
+														<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor" />
+														<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor" />
+													</svg>
+												</span>
+											</a>
+										</td>
+									</tr>
+								<?php } ?>
 							</tbody>
 						</table>
 					</div>
