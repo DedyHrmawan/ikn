@@ -40,7 +40,7 @@ class Dataset_model extends CI_Model
 
 		$statistics = ['Total' => 0];
 		foreach ($results as $item) {
-			if ($item->expected_result) {
+			if (is_numeric($item->expected_result)) {
 				$statistics[self::RESULT_LABEL[$item->expected_result]] = $item->count;
 			}
 
@@ -69,7 +69,7 @@ class Dataset_model extends CI_Model
 
 		$statistics = ['Total' => 0];
 		foreach ($results as $item) {
-			if ($item->expected_result) {
+			if (is_numeric(($item->expected_result))) {
 				$statistics[self::RESULT_LABEL[$item->expected_result]] = $item->count;
 			}
 
