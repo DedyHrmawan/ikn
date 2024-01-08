@@ -34,14 +34,14 @@ class Training extends CI_Controller
 
 		$this->dataset_model->update($id, $payload);
 
-		redirect(site_url('data-latih'));
+		redirect(base_url('data-latih'));
 	}
 
 	public function delete($id)
 	{
 		$this->dataset_model->delete($id);
 
-		redirect(site_url('data-latih'));
+		redirect(base_url('data-latih'));
 	}
 
 	public function export()

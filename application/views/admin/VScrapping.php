@@ -9,11 +9,11 @@
 							<span class="card-label fw-bolder fs-3 mb-1">Data Tweet</span>
 						</h3>
 						<div class="card-toolbar">
-							<a href="<?= site_url("data-tweet") ?>" class="btn btn-primary mx-2">Ambil Data </a>
-							<form action="<?= site_url('scrapping/training-dataset') ?>" method="POST" onsubmit="handleOnSubmitAsTrainingDataset(event)">
+							<a href="<?= base_url("data-tweet") ?>" class="btn btn-primary mx-2">Ambil Data </a>
+							<form action="<?= base_url('scrapping/training-dataset') ?>" method="POST" onsubmit="handleOnSubmitAsTrainingDataset(event)">
 								<button type="submit" class="btn btn-primary mx-2 simpan" disabled>Simpan Data Latih</button>
 							</form>
-							<form action="<?= site_url('scrapping/testing-dataset') ?>" method="POST" onsubmit="handleOnSubmitAsTestingDataset(event)">
+							<form action="<?= base_url('scrapping/testing-dataset') ?>" method="POST" onsubmit="handleOnSubmitAsTestingDataset(event)">
 								<button type="submit" class="btn btn-primary simpan" disabled>Simpan Data Uji</button>
 							</form>
 						</div>
