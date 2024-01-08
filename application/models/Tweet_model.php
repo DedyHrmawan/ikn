@@ -31,8 +31,8 @@ class Tweet_model extends CI_Model
 			$data = [
 				'sentiment' => $item->tweet,
 				'class' => $type,
-				'created_at' =>  now(),
-				'updated_at' => now(),
+				'created_at' => date("Y-m-d H:i:s"),
+				'updated_at' => date("Y-m-d H:i:s"),
 			];
 			$this->db->insert('datasets', $data);
 		}
