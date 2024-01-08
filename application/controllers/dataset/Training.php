@@ -43,4 +43,25 @@ class Training extends CI_Controller
 
 		redirect(site_url('data-latih'));
 	}
+
+	public function export()
+	{
+		$namaFile = "data-latih.arff";
+
+		$separator = ",";
+
+		header("Content-type: text/plain");
+		header("Content-Disposition: attachment; filename=" . $namaFile);
+
+		echo "@relation tweet\n@attribute requirement string\n@attribute class {netral, positif, negatif}\n\n@data\n";
+		$label = ['netral', 'positif', 'negatif'];
+		$data = $this->dataset_model->getAllTrainingDatasets();
+		foreach ($data as $item) {
+			if (!is_numeric($item->expected_result)) {
+				continue;
+			}
+
+			echo "'{$item->sentiment}'" . $separator . $label[$item->expected_result] . "\n";
+		}
+	}
 }
