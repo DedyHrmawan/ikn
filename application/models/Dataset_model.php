@@ -78,4 +78,14 @@ class Dataset_model extends CI_Model
 
 		return $statistics;
 	}
+
+	public function update($id, $payload)
+	{
+		$this->db->where('id', $id)->update('datasets', $payload);
+	}
+
+	public function delete($id)
+	{
+		$this->db->where('id', $id)->delete('datasets');
+	}
 }

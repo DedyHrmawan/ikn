@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dataset extends CI_Controller
+class Testing extends CI_Controller
 {
 	public function __construct()
 	{
@@ -10,18 +10,7 @@ class Dataset extends CI_Controller
 		$this->load->model('dataset_model');
 	}
 
-	public function training()
-	{
-		$data = array(
-			'title' => 'Data Latih',
-			'datasets' => $this->dataset_model->getAllTrainingDatasets(),
-			'statistics' => $this->dataset_model->getStatisticsTrainingDatasets(),
-		);
-
-		$this->template->admin('admin/VDataLatih', $data);
-	}
-
-	public function testing()
+	public function index()
 	{
 		$data = array(
 			'title' => 'Data Uji',
