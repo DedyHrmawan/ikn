@@ -30,7 +30,7 @@ class Scrapping extends CI_Controller
 			show_404();
 		}
 
-		$this->tweet_model->makeTweetAs($selectedId, 'Training');
+		$this->tweet_model->makeTweetAs($selectedId, Dataset_model::TRAINING_DATASET);
 
 		header('application/json');
 		echo json_encode(['status' => true, 'message' => 'Successfully make tweets as training dataset']);
@@ -46,7 +46,7 @@ class Scrapping extends CI_Controller
 			show_404();
 		}
 
-		$this->tweet_model->makeTweetAs($selectedId, 'Testing');
+		$this->tweet_model->makeTweetAs($selectedId, Dataset_model::TESTING_DATASET);
 
 		header('application/json');
 		echo json_encode(['status' => true, 'message' => 'Successfully make tweets as testing dataset']);

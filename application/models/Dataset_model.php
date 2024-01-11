@@ -9,6 +9,9 @@ class Dataset_model extends CI_Model
 		"Negatif"
 	];
 
+	const TRAINING_DATASET = 'Training';
+	const TESTING_DATASET = 'Testing';
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -23,7 +26,7 @@ class Dataset_model extends CI_Model
 
 	public function getAllTrainingDatasets()
 	{
-		$query = $this->db->where('class', 'Training')->get('datasets');
+		$query = $this->db->where('class', self::TRAINING_DATASET)->get('datasets');
 
 		return $query->result();
 	}
@@ -52,7 +55,7 @@ class Dataset_model extends CI_Model
 
 	public function getAllTestingDatasets()
 	{
-		$query = $this->db->where('class', 'Testing')->get('datasets');
+		$query = $this->db->where('class', self::TESTING_DATASET)->get('datasets');
 
 		return $query->result();
 	}
