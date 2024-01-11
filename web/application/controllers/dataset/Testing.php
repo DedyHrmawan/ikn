@@ -34,12 +34,8 @@ class Testing extends CI_Controller
 		$label = ['netral', 'positif', 'negatif'];
 		$data = $this->dataset_model->getAllTestingDatasets();
 		foreach ($data as $item) {
-			if (!is_numeric($item->prediction_result)) {
-				continue;
-			}
-
 			$sentiment = addslashes($item->sentiment);
-			$predictionResult = $label[$item->prediction_result] ?? '';
+			$predictionResult = $label[$item->prediction_result] ?? '?';
 			echo "'{$sentiment}'" . $separator . $predictionResult . "\n";
 		}
 	}
