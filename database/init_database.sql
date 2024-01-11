@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS datasets (
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	sentiment TEXT NOT NULL,
 	class VARCHAR(50) NOT NULL,
-	expected_result VARCHAR(50),
-	prediction_result VARCHAR(255),
+	expected_result TINYINT UNSIGNED,
+	prediction_result TINYINT UNSIGNED,
 	created_at TIMESTAMP NOT NULL,
 	updated_at TIMESTAMP NOT NULL
 );
