@@ -105,10 +105,10 @@
 											<?= $item->created_at ?>
 										</td>
 										<td class="">
-											<button type="button" data-id="<?= $item->id ?>" data-sentiment="<?= $item->sentiment ?>" data-expected_result="<?= $item->expected_result ?>" class="btn btn-bg-light btn-active-color-primary btn-sm mdlEditDataLatih m-1">
+											<button type="button" onclick="onEditRecord(event)" data-id="<?= $item->id ?>" data-sentiment="<?= $item->sentiment ?>" data-expected_result="<?= $item->expected_result ?>" class="btn btn-bg-light btn-active-color-primary btn-sm m-1">
 												Edit
 											</button>
-											<button type="button" data-id="<?= $item->id ?>" class="btn btn-bg-danger btn-active-color-white mdlDelDataLatih btn-sm m-1">
+											<button type="button" onclick="onDeleteRecord(event)" data-id="<?= $item->id ?>" class="btn btn-bg-danger btn-active-color-white btn-sm m-1">
 												Hapus
 											</button>
 										</td>
@@ -225,35 +225,60 @@
 				>`
 		});
 
-		const editButtons = document.querySelectorAll('.mdlEditDataLatih');
-		editButtons.forEach((item) => {
-			item.addEventListener('click', function(e) {
-				e.preventDefault();
+		// const editButtons = document.querySelectorAll('.mdlEditDataLatih');
+		// editButtons.forEach((item) => {
+		// 	item.addEventListener('click', function(e) {
+		// 		e.preventDefault();
 
-				const dataset = e.target.dataset;
+		// 		const dataset = e.target.dataset;
 
-				document.getElementById('sentiment').value = dataset.sentiment;
-				document.getElementById('expected_result').value = dataset.expected_result;
+		// 		document.getElementById('sentiment').value = dataset.sentiment;
+		// 		document.getElementById('expected_result').value = dataset.expected_result;
 
-				const formUpdate = document.getElementById('form-update');
-				formUpdate.setAttribute('action', `${formUpdate.getAttribute('action')}/${dataset.id}`);
+		// 		const formUpdate = document.getElementById('form-update');
+		// 		formUpdate.setAttribute('action', `${formUpdate.getAttribute('action')}/${dataset.id}`);
 
-				$('#mdlEditDataLatih').modal('show');
-			})
-		});
+		// 		$('#mdlEditDataLatih').modal('show');
+		// 	})
+		// });
 
-		const deleteButton = document.querySelectorAll('.mdlDelDataLatih');
-		deleteButton.forEach(item => {
-			item.addEventListener('click', function(e) {
-				e.preventDefault();
+		// const deleteButton = document.querySelectorAll('.mdlDelDataLatih');
+		// deleteButton.forEach(item => {
+		// 	item.addEventListener('click', function(e) {
+		// 		e.preventDefault();
 
-				const dataset = e.target.dataset;
+		// 		const dataset = e.target.dataset;
 
-				const formDelete = document.getElementById('form-delete');
-				formDelete.setAttribute('action', `${formDelete.getAttribute('action')}/${dataset.id}`);
+		// 		const formDelete = document.getElementById('form-delete');
+		// 		formDelete.setAttribute('action', `${formDelete.getAttribute('action')}/${dataset.id}`);
 
-				$('#mdlDelDataLatih').modal('show')
-			});
-		});
+		// 		$('#mdlDelDataLatih').modal('show')
+		// 	});
+		// });
 	});
+
+	function onEditRecord(e) {
+		e.preventDefault();
+
+		const dataset = e.target.dataset;
+
+		document.getElementById('sentiment').value = dataset.sentiment;
+		document.getElementById('expected_result').value = dataset.expected_result;
+
+		const formUpdate = document.getElementById('form-update');
+		formUpdate.setAttribute('action', `${formUpdate.getAttribute('action')}/${dataset.id}`);
+
+		$('#mdlEditDataLatih').modal('show');
+	}
+
+	function onDeleteRecord(e) {
+		e.preventDefault();
+
+		const dataset = e.target.dataset;
+
+		const formDelete = document.getElementById('form-delete');
+		formDelete.setAttribute('action', `${formDelete.getAttribute('action')}/${dataset.id}`);
+
+		$('#mdlDelDataLatih').modal('show')
+	}
 </script>
