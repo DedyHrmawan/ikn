@@ -61,7 +61,8 @@ class Training extends CI_Controller
 				continue;
 			}
 
-			echo "'{$item->sentiment}'" . $separator . $label[$item->expected_result] . "\n";
+			$sentiment = addslashes($item->sentiment);
+			echo "'{$sentiment}'" . $separator . "'{$label[$item->expected_result]}'" . "\n";
 		}
 	}
 }
