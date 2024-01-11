@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS tweets (
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	tweet TEXT NOT NULL,
-	created_at TIMESTAMP NOT NULL,
-	updated_at TIMESTAMP NOT NULL
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS datasets (
@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS datasets (
 	class VARCHAR(50) NOT NULL,
 	expected_result TINYINT UNSIGNED,
 	prediction_result TINYINT UNSIGNED,
-	created_at TIMESTAMP NOT NULL,
-	updated_at TIMESTAMP NOT NULL
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS results (
@@ -22,6 +22,6 @@ CREATE TABLE IF NOT EXISTS results (
 	accuracy_value DECIMAL(5, 2) NOT NULL,
 	recall_value DECIMAL(5, 2) NOT NULL,
 	f_measure_value DECIMAL(5, 2) NOT NULL,
-	created_at TIMESTAMP NOT NULL,
-	updated_at TIMESTAMP NOT NULL
+	created_at TIMESTAMP,
+	updated_at TIMESTAMP
 );
