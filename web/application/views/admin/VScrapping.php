@@ -118,6 +118,10 @@
 		}
 	}
 
+	const toggleSimpanButton = (isDisabled = false) => {
+		$('.simpan').attr('disabled', isDisabled)
+	}
+
 	function showAlert(message, isSuccess = true) {
 		if ($("#myAlert").find("div#myAlert2").length == 0) {
 			$("#myAlert").append(`
@@ -134,7 +138,10 @@
 	function handleOnSubmitAsTrainingDataset(e) {
 		e.preventDefault();
 
+
 		if ($('.checkItem:checked').length > 0) {
+			toggleSimpanButton(true);
+
 			const selectedId = [];
 			$('.checkItem:checked').map((_, e) => {
 				selectedId.push(e.dataset.id)
@@ -151,10 +158,14 @@
 				})
 				.done(function(response) {
 					showAlert('Tweet berhasil ditambahkan sebagai data training!');
+
+					setTimeout(() => location.reload(true), 500);
 				})
 				.fail(function(xhr, textStatus, errorThrown) {
 					showAlert('Upps, ada kesalahan dalam proses penambahan tweet sebagai data training. Coba lagi lain waktu!', false);
 				});
+
+			toggleSimpanButton(false);
 		}
 
 	}
@@ -163,6 +174,8 @@
 		e.preventDefault();
 
 		if ($('.checkItem:checked').length > 0) {
+			toggleSimpanButton(true);
+
 			const selectedId = [];
 			$('.checkItem:checked').map((_, e) => {
 				selectedId.push(e.dataset.id)
@@ -179,11 +192,13 @@
 				.done(function(response) {
 					showAlert('Tweet berhasil ditambahkan sebagai data uji!');
 
-					setTimeout(() => location.reload(true), 1000);
+					setTimeout(() => location.reload(true), 500);
 				})
 				.fail(function(xhr, textStatus, errorThrown) {
 					showAlert('Upps, ada kesalahan dalam proses penambahan tweet sebagai data uji. Coba lagi lain waktu!', false);
 				});
+
+			toggleSimpanButton(false);
 		}
 	}
 </script>
