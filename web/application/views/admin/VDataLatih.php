@@ -99,7 +99,7 @@
 											<?= $item->sentiment ?>
 										</td>
 										<td class="text-dark fw-bolder text-hover-primary fs-6">
-											<?= ['Netral', 'Positif', 'Negatif'][$item->expected_result] ?>
+											<?= ['Netral', 'Positif', 'Negatif'][$item->expected_result] ?? '' ?>
 										</td>
 										<td class="text-dark fw-bolder text-hover-primary fs-6">
 											<?= $item->created_at ?>

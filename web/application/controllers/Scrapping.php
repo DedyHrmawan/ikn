@@ -8,6 +8,7 @@ class Scrapping extends CI_Controller
 		parent::__construct();
 
 		$this->load->model('tweet_model');
+		$this->load->model('dataset_model');
 	}
 
 	public function index()
