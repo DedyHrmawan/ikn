@@ -68,9 +68,26 @@ class Training extends CI_Controller
 
 	public function preprocessing()
 	{
-		$res = shell_exec("cd ../python && python3 build_model.py");
+		$output = null;
+		$status = null;
+		exec("cd ../python && python3 build_model.py", $output, $status);
 
-		header('application/json');
-		echo json_encode(['status' => true, 'message' => 'Successfully preprocessing dataset and build naive bayes model']);
+		if (!$status) {
+			return $this->output
+				->set_content_type('application/json')
+				->set_status_header('200')
+				->set_output(json_encode([
+					'status' => true,
+					'message' => 'Successfully preprocessing dataset and build naive bayes model'
+				]));
+		}
+
+		return $this->output
+			->set_content_type('application/json')
+			->set_status_header(500)
+			->set_output(json_encode([
+				'status' => false,
+				'message' => 'Upps, there are an error when processing the request'
+			]));
 	}
 }
