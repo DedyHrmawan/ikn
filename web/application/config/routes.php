@@ -56,4 +56,3 @@ $route['translate_uri_dashes'] = TRUE;
 $route['data-tweet'] = 'scrapping/index';
 $route['data-latih'] = 'dataset/training';
 $route['data-uji'] = 'dataset/testing';
-$route['confusion-matrix'] = 'welcome/VCMatrix';
