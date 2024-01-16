@@ -45,8 +45,6 @@ def main():
 
     preprocessing.preprocessing_data(datasets)
 
-    datasets = pd.read_csv("preprocessed_training_datasets.csv")
-
     x_train, x_test, y_train, y_test = train_test_split(
         datasets["opinion"], datasets["label"], test_size=0.2, random_state=42
     )
@@ -68,7 +66,6 @@ def main():
     y_pred = nb_model.predict(x_test_tfidf)
 
     cr = classification_report(y_test, y_pred)
-    print(cr)
 
     # Get precision, recall, fscore, and support for each class
     precision, recall, fscore, support = precision_recall_fscore_support(y_test, y_pred)
@@ -94,10 +91,10 @@ def main():
             if cursor.fetchone() is not None:
                 upsert_sql = "UPDATE results SET precision_value = %s, accuracy_value = %s, recall_value = %s, f_measure_value = %s, updated_at = %s WHERE class = %s"
                 upsert_params = [
-                    precision[label_index],  # type: ignore
-                    accuracy,
-                    recall[label_index],  # type: ignore
-                    fscore[label_index],  # type: ignore
+                    float(precision[label_index]),  # type: ignore
+                    float(accuracy),
+                    float(recall[label_index]),  # type: ignore
+                    float(fscore[label_index]),  # type: ignore
                     labels[specified_label],
                     timestamp,
                 ]
@@ -105,10 +102,10 @@ def main():
                 upsert_sql = "INSERT INTO results (class, precision_value, accuracy_value, recall_value, f_measure_value, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)"
                 upsert_params = [
                     labels[specified_label],
-                    precision[label_index],  # type: ignore
-                    accuracy,
-                    recall[label_index],  # type: ignore
-                    fscore[label_index],  # type: ignore
+                    float(precision[label_index]),  # type: ignore
+                    float(accuracy),
+                    float(recall[label_index]),  # type: ignore
+                    float(fscore[label_index]),  # type: ignore
                     timestamp,
                     timestamp,
                 ]
