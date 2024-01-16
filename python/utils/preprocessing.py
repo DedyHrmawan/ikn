@@ -1,6 +1,7 @@
 import re
 import string
 
+import nltk
 import pandas as pd
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
@@ -44,6 +45,8 @@ def _remove_single_char(text: str) -> str:
 
 
 def _tokenization(data: pd.Series) -> pd.Series:
+    nltk.download("punkt")
+
     return (
         data.apply(_remove_tweet_special)
         .apply(_remove_number)
@@ -56,6 +59,8 @@ def _tokenization(data: pd.Series) -> pd.Series:
 
 
 def _filtering(data: pd.Series) -> pd.Series:
+    nltk.download("stopwords")
+
     list_stopwords = set(stopwords.words("indonesian"))
 
     return data.apply(

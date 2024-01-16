@@ -2,12 +2,13 @@ version: "3.8"
 services:
   app:
     build:
-      context: ./.docker/php
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./.docker/php/Dockerfile
     depends_on:
       - db
     volumes:
       - ./web:/var/www/html
+      - ./python:/var/www/python
     ports:
       - 8000:80
 

@@ -65,4 +65,12 @@ class Training extends CI_Controller
 			echo "'{$sentiment}'" . $separator . $label[$item->expected_result] . "\n";
 		}
 	}
+
+	public function preprocessing()
+	{
+		$res = shell_exec("cd ../python && python3 build_model.py");
+
+		header('application/json');
+		echo json_encode(['status' => true, 'message' => 'Successfully preprocessing dataset and build naive bayes model']);
+	}
 }

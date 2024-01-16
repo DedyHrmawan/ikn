@@ -67,7 +67,9 @@
 							<span class="card-label fw-bolder fs-3 mb-1">Data Latih</span>
 						</h3>
 						<div class="card-toolbar">
-							<a href="<?= base_url('dataset/training/export') ?>" class="btn btn-danger mx-2" title="Download file .arff data latih !"><span class="svg-icon svg-icon-muted svg-icon-2x"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<a href="<?= base_url('dataset/training/export') ?>" class="btn btn-danger mx-2" title="Download file .arff data latih !">
+								<span class="svg-icon svg-icon-muted">
+									<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path opacity="0.3" d="M19 15C20.7 15 22 13.7 22 12C22 10.3 20.7 9 19 9C18.9 9 18.9 9 18.8 9C18.9 8.7 19 8.3 19 8C19 6.3 17.7 5 16 5C15.4 5 14.8 5.2 14.3 5.5C13.4 4 11.8 3 10 3C7.2 3 5 5.2 5 8C5 8.3 5 8.7 5.1 9H5C3.3 9 2 10.3 2 12C2 13.7 3.3 15 5 15H19Z" fill="currentColor" />
 										<path d="M13 17.4V12C13 11.4 12.6 11 12 11C11.4 11 11 11.4 11 12V17.4H13Z" fill="currentColor" />
 										<path opacity="0.3" d="M8 17.4H16L12.7 20.7C12.3 21.1 11.7 21.1 11.3 20.7L8 17.4Z" fill="currentColor" />
@@ -75,7 +77,9 @@
 								</span>
 								Download .arff
 							</a>
-							<a href="#" class="btn btn-primary" title="Proses preprocessing data latih !">Preprocessing!</a>
+							<button type="button" onclick="HandlePreprocessingButton(event)" class="btn btn-primary mx-2 preprocessing-btn" title="Proses preprocessing data latih!">
+								Preprocessing & Modeling!
+							</button>
 						</div>
 					</div>
 					<div class="card-body py-3">
@@ -280,5 +284,38 @@
 		formDelete.setAttribute('action', `${formDelete.getAttribute('action')}/${dataset.id}`);
 
 		$('#mdlDelDataLatih').modal('show')
+	}
+
+	function HandlePreprocessingButton(e) {
+		const res = confirm("Apakah kamu yakin ingin memulai proses preprocessing dan modeling naive bayes dengan data latih yang sudah ada?");
+		if (!res) {
+			return;
+		}
+
+		const preprocessingBtn = document.getElementsByClassName('preprocessing-btn')[0];
+		const loadingContent = `
+			<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+			<span class="sr-only">Loading...</span>
+		`
+		const oldContent = preprocessingBtn.innerHTML;
+
+		preprocessingBtn.setAttribute('disabled', 'disabled');
+		preprocessingBtn.innerHTML = `${loadingContent}${oldContent}`;
+
+		$.ajax({
+				url: "<?= base_url('dataset/training/preprocessing') ?>",
+				method: 'POST',
+				'accepts': 'application/json',
+				timeout: 0
+			}).done(function(response) {
+				alert("Yeeaaay, preprocessing dan modeling sudah selesai")
+			})
+			.fail(function(xhr, textStatus, errorThrown) {
+				alert("Upps, there was an error when processing the request")
+			})
+			.always(function() {
+				preprocessingBtn.innerHTML = oldContent;
+				preprocessingBtn.removeAttribute('disabled');
+			})
 	}
 </script>

@@ -77,8 +77,9 @@
 								</span>
 								Download .arff
 							</a>
-							<a href="#" class="btn btn-primary" title="Proses untuk menghitung confusion matrix !">Hitung Confusion Matrix!</a>
-							<!-- <a href="#" class="btn btn-primary" title="Buat semua data pada tabel menjadi data uji atau data latih !">Tambah Data
+							<a href="#" class="btn btn-primary" title="Proses untuk memprediksi data uji!">Prediksi Data Uji!</a>
+							<!-- <a href="#" class="btn btn-primary" title="Buat semua data pada tabel menjadi data uji atau data latih !">
+								Tambah Data
 								!</a> -->
 						</div>
 					</div>
