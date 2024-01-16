@@ -14,7 +14,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 # Also log to a file
-file_handler = logging.FileHandler("log/database.log")
+file_handler = logging.FileHandler("database.log")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
