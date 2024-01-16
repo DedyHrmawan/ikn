@@ -4,9 +4,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Dataset_model extends CI_Model
 {
 	const RESULT_LABEL = [
+		"Negatif",
 		"Netral",
 		"Positif",
-		"Negatif"
 	];
 
 	const TRAINING_DATASET = 'Training';

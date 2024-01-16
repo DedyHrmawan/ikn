@@ -53,8 +53,8 @@ class Training extends CI_Controller
 		header("Content-type: text/plain");
 		header("Content-Disposition: attachment; filename=" . $namaFile);
 
-		echo "@relation tweet\n@attribute requirement string\n@attribute class {netral, positif, negatif}\n\n@data\n";
-		$label = ['netral', 'positif', 'negatif'];
+		echo "@relation tweet\n@attribute requirement string\n@attribute class {Negatif, Netral, Positif}\n\n@data\n";
+		$label = Dataset_model::RESULT_LABEL;
 		$data = $this->dataset_model->getAllTrainingDatasets();
 		foreach ($data as $item) {
 			if (!is_numeric($item->expected_result)) {

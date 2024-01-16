@@ -99,7 +99,7 @@
 											<?= $item->sentiment ?>
 										</td>
 										<td class="text-dark fw-bolder text-hover-primary fs-6">
-											<?= ['Netral', 'Positif', 'Negatif'][$item->expected_result] ?? '' ?>
+											<?= ['Negatif', 'Netral', 'Positif'][$item->expected_result] ?? '' ?>
 										</td>
 										<td class="text-dark fw-bolder text-hover-primary fs-6">
 											<?= $item->created_at ?>
@@ -154,9 +154,9 @@
 						</label>
 						<select class="form-select" id="expected_result" name="expected_result" aria-label="Pilih Kelas !" required>
 							<option value="" selected hidden>Pilih Kelas</option>
-							<option value="0">Netral</option>
-							<option value="1">Positif</option>
-							<option value="2">Negatif</option>
+							<option value="0">Negatif</option>
+							<option value="1">Netral</option>
+							<option value="2">Positif</option>
 						</select>
 					</div>
 				</div>
