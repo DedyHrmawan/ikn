@@ -25,3 +25,8 @@ CREATE TABLE IF NOT EXISTS results (
 	created_at TIMESTAMP,
 	updated_at TIMESTAMP
 );
+
+ALTER TABLE
+	datasets
+ADD
+	COLUMN preprocessed TEXT;
