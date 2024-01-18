@@ -77,7 +77,7 @@
 								</span>
 								Download .arff
 							</a>
-							<a href="#" class="btn btn-primary" title="Proses untuk memprediksi data uji!">Prediksi Data Uji!</a>
+							<button type="button" onclick="HandleTestingPrediction(event)" class="btn btn-primary testing-prediction-btn" title="Proses untuk memprediksi data uji!">Prediksi Data Uji!</button>
 							<!-- <a href="#" class="btn btn-primary" title="Buat semua data pada tabel menjadi data uji atau data latih !">
 								Tambah Data
 								!</a> -->
@@ -144,4 +144,37 @@
 				>`
 		});
 	});
+
+	function HandleTestingPrediction(e) {
+		const res = confirm("Apakah kamu yakin ingin memulai proses prediksi data uji dengan model naive bayes?");
+		if (!res) {
+			return;
+		}
+
+		const predictionBtn = document.getElementsByClassName('testing-prediction-btn')[0];
+		const loadingContent = `
+			<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+			<span class="sr-only">Loading...</span>
+		`
+		const oldContent = predictionBtn.innerHTML;
+
+		predictionBtn.setAttribute('disabled', 'disabled');
+		predictionBtn.innerHTML = `${loadingContent}${oldContent}`;
+
+		$.ajax({
+				url: "<?= base_url('dataset/testing/prediction') ?>",
+				method: 'POST',
+				'accepts': 'application/json',
+				timeout: 0
+			}).done(function(response) {
+				alert("Yeeaaay, uji coba prediksi sentiment berhasil dilakukan")
+			})
+			.fail(function(xhr, textStatus, errorThrown) {
+				alert("Upps, there was an error when processing the request")
+			})
+			.always(function() {
+				predictionBtn.innerHTML = oldContent;
+				predictionBtn.removeAttribute('disabled');
+			})
+	}
 </script>

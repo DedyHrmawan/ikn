@@ -39,4 +39,30 @@ class Testing extends CI_Controller
 			echo "'{$sentiment}'" . $separator . $predictionResult . "\n";
 		}
 	}
+
+	public function prediction()
+	{
+		$output = null;
+		$status = null;
+		exec("cd ../python && python3 testing_prediction.py 2>&1", $output, $status);
+
+		if (!$status) {
+			return $this->output
+				->set_content_type('application/json')
+				->set_status_header('200')
+				->set_output(json_encode([
+					'status' => true,
+					'message' => 'Successfully testing prediction datasets using naive bayes model',
+				]));
+		}
+
+		return $this->output
+			->set_content_type('application/json')
+			->set_status_header(500)
+			->set_output(json_encode([
+				'status' => false,
+				'message' => 'Upps, there are an error when processing the request',
+				'error' => $output
+			]));
+	}
 }
