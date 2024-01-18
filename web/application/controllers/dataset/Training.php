@@ -70,7 +70,7 @@ class Training extends CI_Controller
 	{
 		$output = null;
 		$status = null;
-		exec("cd ../python && python3 build_model.py", $output, $status);
+		exec("cd ../python && python3 build_model.py 2>&1", $output, $status);
 
 		if (!$status) {
 			return $this->output
@@ -87,7 +87,8 @@ class Training extends CI_Controller
 			->set_status_header(500)
 			->set_output(json_encode([
 				'status' => false,
-				'message' => 'Upps, there are an error when processing the request'
+				'message' => 'Upps, there are an error when processing the request',
+				'error' => $output
 			]));
 	}
 }
