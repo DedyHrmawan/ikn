@@ -1,5 +1,6 @@
 import pickle
 import sys
+import time
 from datetime import datetime
 
 import pandas as pd
@@ -31,9 +32,11 @@ def main():
     if cnx is None:
         raise Exception("Could not connect to database")
 
+    start_time = time.time()
+
     with cnx.cursor() as cursor:
         cursor.execute(
-            "SELECT sentiment, expected_result as label FROM datasets WHERE class = %s AND expected_result IS NOT NULL",
+            "SELECT id, sentiment, expected_result as label FROM datasets WHERE class = %s AND expected_result IS NOT NULL",
             ["Training"],
         )
         training_datasets = cursor.fetchall()
@@ -41,9 +44,15 @@ def main():
             cnx.close()  # Close the connection
             sys.exit("No training dataset found")
 
-    datasets = pd.DataFrame(training_datasets, columns=["opinion", "label"])
+    datasets = pd.DataFrame(training_datasets, columns=["id", "opinion", "label"])
 
     preprocessing.preprocessing_data(datasets)
+
+    save_preprocessed_sentiment = time.time() - start_time
+    start_time = time.time()
+    print(
+        f"Preprocessing {len(datasets.index)} data took {save_preprocessed_sentiment}s"
+    )
 
     x_train, x_test, y_train, y_test = train_test_split(
         datasets["opinion"], datasets["label"], test_size=0.2, random_state=42
@@ -60,18 +69,41 @@ def main():
     nb_model = MultinomialNB()
     nb_model.fit(x_train_tfidf, y_train)
 
+    y_pred = nb_model.predict(x_test_tfidf)
+
+    save_preprocessed_sentiment = time.time() - start_time
+    start_time = time.time()
+    print(f"Building and testing model took {save_preprocessed_sentiment}s")
+
+    # Persistent the model into pickle format
     with open("naive_bayes_model.pkl", "wb") as file:
         pickle.dump(nb_model, file)
 
-    y_pred = nb_model.predict(x_test_tfidf)
-
     cr = classification_report(y_test, y_pred)
 
+    store_model_calc_result(cnx, nb_model, y_test, y_pred)
+
+    save_preprocessed_sentiment = time.time() - start_time
+    start_time = time.time()
+    print(f"Store model results took {save_preprocessed_sentiment}s")
+
+    store_preprocessing_result(cnx, datasets)
+
+    save_preprocessed_sentiment = time.time() - start_time
+    print(
+        f"Save preprocessed {len(datasets.index)} sentiment data took {save_preprocessed_sentiment}s"
+    )
+
+    cnx.close()
+
+
+def store_model_calc_result(cnx, nb_model, y_test, y_pred):
     # Get precision, recall, fscore, and support for each class
     precision, recall, fscore, support = precision_recall_fscore_support(y_test, y_pred)
 
-    labels = ["Negative", "Netral", "Positive"]
     # Specify the label for which you want to calculate accuracy
+    labels = ["Negative", "Netral", "Positive"]
+
     for specified_label in range(len(labels)):
         # Find the index of the specified label in the classes
         label_index = list(nb_model.classes_).index(specified_label)
@@ -81,6 +113,7 @@ def main():
             y_test[y_test == specified_label], y_pred[y_test == specified_label]
         )
 
+        # Update model accuracy into databases
         with cnx.cursor() as cursor:
             sql = "SELECT * FROM results WHERE class = %s"
             params = [labels[specified_label]]
@@ -111,9 +144,22 @@ def main():
                 ]
 
             cursor.execute(upsert_sql, upsert_params)
-            cnx.commit()
+            cnx.commit()  # Close the connection
 
-    cnx.close()  # Close the connection
+
+def store_preprocessing_result(cnx, datasets):
+    # Save preprocessed opinion into databases
+    for i in datasets.index:
+        with cnx.cursor() as cursor:
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            sql = "UPDATE datasets SET preprocessed=%s, updated_at=%s WHERE id = %s"
+            params = [
+                str(datasets["opinion"][i]),
+                timestamp,
+                int(datasets["id"][i]),  # type: ignore
+            ]
+            cursor.execute(sql, params)
+            cnx.commit()
 
 
 if __name__ == "__main__":
