@@ -42,7 +42,7 @@ def main():
         training_datasets = cursor.fetchall()
         if training_datasets is None or len(training_datasets) == 0:
             cnx.close()  # Close the connection
-            sys.exit("No training dataset found")
+            sys.exit("1")
 
     datasets = pd.DataFrame(training_datasets, columns=["id", "opinion", "label"])
 
@@ -55,16 +55,22 @@ def main():
     )
 
     x_train, x_test, y_train, y_test = train_test_split(
-        datasets["opinion"], datasets["label"], test_size=0.2, random_state=42
+        datasets["opinion"], datasets["label"], test_size=0.25, random_state=42
     )
 
     count_vec = CountVectorizer()
     x_train_count = count_vec.fit_transform(x_train)
     x_test_count = count_vec.transform(x_test)
 
+    with open("train_count_vectorizer.pkl", "wb") as file:
+        pickle.dump(count_vec, file)
+
     tfidf_transformer = TfidfTransformer()
     x_train_tfidf = tfidf_transformer.fit_transform(x_train_count)
     x_test_tfidf = tfidf_transformer.transform(x_test_count)
+
+    with open("train_tfidf_transformer.pkl", "wb") as file:
+        pickle.dump(tfidf_transformer, file)
 
     nb_model = MultinomialNB()
     nb_model.fit(x_train_tfidf, y_train)
@@ -81,13 +87,13 @@ def main():
 
     cr = classification_report(y_test, y_pred)
 
-    store_model_calc_result(cnx, nb_model, y_test, y_pred)
+    save_model_calc_result(cnx, nb_model, y_test, y_pred)
 
     save_preprocessed_sentiment = time.time() - start_time
     start_time = time.time()
     print(f"Store model results took {save_preprocessed_sentiment}s")
 
-    store_preprocessing_result(cnx, datasets)
+    save_preprocessing_result(cnx, datasets)
 
     save_preprocessed_sentiment = time.time() - start_time
     print(
@@ -97,44 +103,47 @@ def main():
     cnx.close()
 
 
-def store_model_calc_result(cnx, nb_model, y_test, y_pred):
+def save_model_calc_result(cnx, nb_model, y_test, y_pred):
     # Get precision, recall, fscore, and support for each class
     precision, recall, fscore, support = precision_recall_fscore_support(y_test, y_pred)
 
     # Specify the label for which you want to calculate accuracy
     labels = ["Negative", "Netral", "Positive"]
 
-    for specified_label in range(len(labels)):
+    for label_id in range(len(labels)):
         # Find the index of the specified label in the classes
-        label_index = list(nb_model.classes_).index(specified_label)
+        label_index = list(nb_model.classes_).index(label_id)
 
         # Calculate accuracy for the specified label
         accuracy = accuracy_score(
-            y_test[y_test == specified_label], y_pred[y_test == specified_label]
+            y_test[y_test == label_id], y_pred[y_test == label_id]
         )
 
         # Update model accuracy into databases
         with cnx.cursor() as cursor:
             sql = "SELECT * FROM results WHERE class = %s"
-            params = [labels[specified_label]]
+            params = [labels[label_id]]
             cursor.execute(sql, params)
+            result = cursor.fetchone()
 
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            upsert_sql = ""
+            upsert_params = []
             # checking if result with specified class is existing or not
-            if cursor.fetchone() is not None:
+            if result is not None:
                 upsert_sql = "UPDATE results SET precision_value = %s, accuracy_value = %s, recall_value = %s, f_measure_value = %s, updated_at = %s WHERE class = %s"
                 upsert_params = [
                     float(precision[label_index]),  # type: ignore
                     float(accuracy),
                     float(recall[label_index]),  # type: ignore
                     float(fscore[label_index]),  # type: ignore
-                    labels[specified_label],
                     timestamp,
+                    labels[label_id],
                 ]
             else:
                 upsert_sql = "INSERT INTO results (class, precision_value, accuracy_value, recall_value, f_measure_value, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)"
                 upsert_params = [
-                    labels[specified_label],
+                    labels[label_id],
                     float(precision[label_index]),  # type: ignore
                     float(accuracy),
                     float(recall[label_index]),  # type: ignore
@@ -144,10 +153,10 @@ def store_model_calc_result(cnx, nb_model, y_test, y_pred):
                 ]
 
             cursor.execute(upsert_sql, upsert_params)
-            cnx.commit()  # Close the connection
+            cnx.commit()
 
 
-def store_preprocessing_result(cnx, datasets):
+def save_preprocessing_result(cnx, datasets):
     # Save preprocessed opinion into databases
     for i in datasets.index:
         with cnx.cursor() as cursor:

@@ -2,3 +2,4 @@
 .venv
 log
 *.pkl
+database.log
