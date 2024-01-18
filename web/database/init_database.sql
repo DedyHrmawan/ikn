@@ -30,3 +30,14 @@ ALTER TABLE
 	datasets
 ADD
 	COLUMN preprocessed TEXT;
+
+ALTER TABLE
+	results
+MODIFY
+	COLUMN precision_value DECIMAL(5, 4) NOT NULL,
+MODIFY
+	COLUMN accuracy_value DECIMAL(5, 4) NOT NULL,
+MODIFY
+	COLUMN recall_value DECIMAL(5, 4) NOT NULL,
+MODIFY
+	COLUMN f_measure_value DECIMAL(5, 4) NOT NULL
