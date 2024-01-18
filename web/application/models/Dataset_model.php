@@ -63,8 +63,8 @@ class Dataset_model extends CI_Model
 	public function getStatisticsTestingDatasets()
 	{
 		$query = $this->db
-			->select('expected_result, COUNT(*) as count')
-			->group_by('expected_result')
+			->select('prediction_result, COUNT(*) as count')
+			->group_by('prediction_result')
 			->where('class', 'Testing')
 			->get('datasets');
 
@@ -72,8 +72,8 @@ class Dataset_model extends CI_Model
 
 		$statistics = ['Total' => 0];
 		foreach ($results as $item) {
-			if (is_numeric(($item->expected_result))) {
-				$statistics[self::RESULT_LABEL[$item->expected_result]] = $item->count;
+			if (is_numeric(($item->prediction_result))) {
+				$statistics[self::RESULT_LABEL[$item->prediction_result]] = $item->count;
 			}
 
 			$statistics['Total'] += $item->count;
