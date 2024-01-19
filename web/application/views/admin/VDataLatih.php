@@ -151,19 +151,19 @@
 					<label class="d-flex align-items-center fs-6 fw-bold mb-2">
 						<span>Tweet / Sentimen</span>
 					</label>
-					<textarea type="text" readonly class="form-control form-control-solid" name="sentiment" id="d_sentiment" cols="15" rows="5"></textarea>
+					<textarea type="text" disabled class="form-control form-control-solid" name="sentiment" id="d_sentiment" cols="15" rows="5"></textarea>
 				</div>
 				<div class="d-flex flex-column mb-8 fv-row">
 					<label class="d-flex align-items-center fs-6 fw-bold mb-2">
 						<span>Preprocessed Tweet</span>
 					</label>
-					<textarea type="text" readonly class="form-control form-control-solid" name="preprocessed_sentiment" id="d_preprocessed_sentiment" cols="15" rows="5"></textarea>
+					<textarea type="text" disabled class="form-control form-control-solid" name="preprocessed_sentiment" id="d_preprocessed_sentiment" cols="15" rows="5"></textarea>
 				</div>
 				<div class="d-flex flex-column mb-8 fv-row">
 					<label class="d-flex align-items-center fs-6 fw-bold mb-2">
 						<span>Kelas</span>
 					</label>
-					<select readonly class="form-select" id="d_expected_result" name="expected_result" aria-label="Pilih Kelas!">
+					<select disabled class="form-select" id="d_expected_result" name="expected_result" aria-label="Pilih Kelas!">
 						<option value="" selected hidden>Pilih Kelas</option>
 						<option value="0">Negatif</option>
 						<option value="1">Netral</option>
