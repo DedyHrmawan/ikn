@@ -19,6 +19,12 @@ databaseConfig = {
     "database": config["DB_DATABASE"],
 }
 
+model_filename = str(config.get("NB_MODEL_FILENAME", "nb_model.pkl"))
+count_vec_filename = str(config.get("COUNT_VECTORIZER_FILENAME", "train_count_vec.pkl"))
+tfidf_transformer_filename = str(
+    config.get("TFIDF_TRANSFORMER_FILENAME", "train_tfidf_transformer.pkl")
+)
+
 
 def main():
     cnx = database.connect(databaseConfig, attempts=3)
@@ -46,15 +52,15 @@ def main():
     start_time = time.time()
     print(f"Preprocessing {len(datasets.index)} data took {prediction_sentiment}s")
 
-    with open("train_count_vectorizer.pkl", "rb") as file:
+    with open(count_vec_filename, "rb") as file:
         count_vec: CountVectorizer = pickle.load(file)
     x_test_count = count_vec.transform(datasets["opinion"])
 
-    with open("train_tfidf_transformer.pkl", "rb") as file:
+    with open(tfidf_transformer_filename, "rb") as file:
         tfidf_transformer: TfidfTransformer = pickle.load(file)
     x_test_tfidf = tfidf_transformer.transform(x_test_count)
 
-    with open("naive_bayes_model.pkl", "rb") as file:
+    with open(model_filename, "rb") as file:
         nb_model: MultinomialNB = pickle.load(file)
 
     y_pred = nb_model.predict(x_test_tfidf)

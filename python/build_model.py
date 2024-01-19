@@ -25,6 +25,14 @@ databaseConfig = {
     "database": config["DB_DATABASE"],
 }
 
+use_training_data_as_testing = bool(config.get("USE_TRAINING_DATA_FOR_TESTING", False))
+split_testing_size_ratio = float(config.get("SPLIT_TESTING_SIZE_RATIO", 0.25))  # type: ignore
+model_filename = str(config.get("NB_MODEL_FILENAME", "nb_model.pkl"))
+count_vec_filename = str(config.get("COUNT_VECTORIZER_FILENAME", "train_count_vec.pkl"))
+tfidf_transformer_filename = str(
+    config.get("TFIDF_TRANSFORMER_FILENAME", "train_tfidf_transformer.pkl")
+)
+
 
 def main():
     cnx = database.connect(databaseConfig, attempts=3)
@@ -54,22 +62,32 @@ def main():
         f"Preprocessing {len(datasets.index)} data took {save_preprocessed_sentiment}s"
     )
 
-    x_train, x_test, y_train, y_test = train_test_split(
-        datasets["opinion"], datasets["label"], test_size=0.25, random_state=42
-    )
+    if not use_training_data_as_testing:
+        x_train, x_test, y_train, y_test = train_test_split(
+            datasets["opinion"],
+            datasets["label"],
+            test_size=split_testing_size_ratio,
+            random_state=42,
+        )
+    else:
+        x_train = datasets["opinion"]
+        y_train = datasets["label"]
+
+        x_test = datasets["opinion"]
+        y_test = datasets["label"]
 
     count_vec = CountVectorizer()
     x_train_count = count_vec.fit_transform(x_train)
     x_test_count = count_vec.transform(x_test)
 
-    with open("train_count_vectorizer.pkl", "wb") as file:
+    with open(count_vec_filename, "wb") as file:
         pickle.dump(count_vec, file)
 
     tfidf_transformer = TfidfTransformer()
     x_train_tfidf = tfidf_transformer.fit_transform(x_train_count)
     x_test_tfidf = tfidf_transformer.transform(x_test_count)
 
-    with open("train_tfidf_transformer.pkl", "wb") as file:
+    with open(tfidf_transformer_filename, "wb") as file:
         pickle.dump(tfidf_transformer, file)
 
     nb_model = MultinomialNB()
@@ -82,10 +100,11 @@ def main():
     print(f"Building and testing model took {save_preprocessed_sentiment}s")
 
     # Persistent the model into pickle format
-    with open("naive_bayes_model.pkl", "wb") as file:
+    with open(model_filename, "wb") as file:
         pickle.dump(nb_model, file)
 
     cr = classification_report(y_test, y_pred)
+    print(cr)
 
     save_model_calc_result(cnx, nb_model, y_test, y_pred)
 
