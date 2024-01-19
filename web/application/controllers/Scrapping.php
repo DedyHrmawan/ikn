@@ -52,4 +52,30 @@ class Scrapping extends CI_Controller
 		header('application/json');
 		echo json_encode(['status' => true, 'message' => 'Successfully make tweets as testing dataset']);
 	}
+
+	public function scrapping()
+	{
+		$output = null;
+		$status = null;
+		exec("cd ../python && python3 twitter_scrapping.py 2>&1", $output, $status);
+
+		if (!$status) {
+			return $this->output
+				->set_content_type('application/json')
+				->set_status_header('200')
+				->set_output(json_encode([
+					'status' => true,
+					'message' => 'Successfully scrapping data on twitter',
+				]));
+		}
+
+		return $this->output
+			->set_content_type('application/json')
+			->set_status_header(500)
+			->set_output(json_encode([
+				'status' => false,
+				'message' => 'Upps, there are an error when processing the request',
+				'error' => $output
+			]));
+	}
 }

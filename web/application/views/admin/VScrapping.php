@@ -9,7 +9,7 @@
 							<span class="card-label fw-bolder fs-3 mb-1">Data Tweet</span>
 						</h3>
 						<div class="card-toolbar">
-							<a href="<?= base_url("data-tweet") ?>" class="btn btn-primary mx-2">Ambil Data </a>
+							<button type="button" onclick="HandleScrappingData(event)" class="btn btn-primary mx-2 scrapping-data-btn">Ambil Data </button>
 							<form action="<?= base_url('scrapping/training-dataset') ?>" method="POST" onsubmit="handleOnSubmitAsTrainingDataset(event)">
 								<button type="submit" class="btn btn-primary mx-2 simpan" disabled>Simpan Data Latih</button>
 							</form>
@@ -200,5 +200,38 @@
 
 			toggleSimpanButton(false);
 		}
+	}
+
+	function HandleScrappingData(e) {
+		const res = confirm("Apakah kamu yakin ingin memulai proses scrapping data di twitter?");
+		if (!res) {
+			return;
+		}
+
+		const scrappingDataBtn = document.getElementsByClassName('scrapping-data-btn')[0];
+		const loadingContent = `
+			<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+			<span class="sr-only">Loading...</span>
+		`
+		const oldContent = scrappingDataBtn.innerHTML;
+
+		scrappingDataBtn.setAttribute('disabled', 'disabled');
+		scrappingDataBtn.innerHTML = `${loadingContent}${oldContent}`;
+
+		$.ajax({
+				url: "<?= base_url('scrapping/scrapping') ?>",
+				method: 'POST',
+				'accepts': 'application/json',
+				timeout: 0
+			}).done(function(response) {
+				alert("Yeeaaay, Proses scrapping was successful")
+			})
+			.fail(function(xhr, textStatus, errorThrown) {
+				alert("Upps, there was an error when processing the request")
+			})
+			.always(function() {
+				scrappingDataBtn.innerHTML = oldContent;
+				scrappingDataBtn.removeAttribute('disabled');
+			})
 	}
 </script>
