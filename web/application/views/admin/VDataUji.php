@@ -12,7 +12,10 @@
 								<rect x="3" y="13" width="3" height="6" rx="1.5" fill="currentColor" />
 							</svg>
 						</span>
-						<div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5"><?= $statistics['Netral'] ?? 0 ?></div>
+						<div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">
+							<span><?= $statistics['Netral'] ?? 0 ?></span>
+							<span>(<?= number_format(($statistics['Netral'] ?? 0) / ($statistics['Total'] ?? 1) * 100, 2) ?>%)</span>
+						</div>
 						<div class="fw-bold text-gray-400">Sentimen Netral</div>
 					</div>
 				</span>
@@ -27,7 +30,10 @@
 								<path d="M15 18.6C15 20.3 16.3 21.6 18 21.6C19.7 21.6 21 20.3 21 18.6V12.5C21 12.2 20.6 12 20.3 12.2L19 13.6L17.7 12.3C17.3 11.9 16.7 11.9 16.3 12.3L15 13.6V18.6Z" fill="currentColor" />
 							</svg>
 						</span>
-						<div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5"><?= $statistics['Positif'] ?? 0 ?></div>
+						<div class="text-gray-100 fw-bolder fs-2 mb-2 mt-5">
+							<span><?= $statistics['Positif'] ?? 0 ?></span>
+							<span>(<?= number_format(($statistics['Positif'] ?? 0) / ($statistics['Total'] ?? 1) * 100, 2) ?>%)</span>
+						</div>
 						<div class="fw-bold text-gray-100">Sentimen Positif</div>
 					</div>
 				</span>
@@ -41,7 +47,10 @@
 								<path d="M14 6V5H10V6H8V5C8 3.9 8.9 3 10 3H14C15.1 3 16 3.9 16 5V6H14ZM20 15H14V16C14 16.6 13.5 17 13 17H11C10.5 17 10 16.6 10 16V15H4C3.6 15 3.3 14.9 3 14.7V18C3 19.1 3.9 20 5 20H19C20.1 20 21 19.1 21 18V14.7C20.7 14.9 20.4 15 20 15Z" fill="currentColor" />
 							</svg>
 						</span>
-						<div class="text-white fw-bolder fs-2 mb-2 mt-5"><?= $statistics['Negatif'] ?? 0 ?></div>
+						<div class="text-white fw-bolder fs-2 mb-2 mt-5">
+							<span><?= $statistics['Negatif'] ?? 0 ?></span>
+							<span>(<?= number_format(($statistics['Negatif'] ?? 0) / ($statistics['Total'] ?? 1) * 100, 2) ?>%)</span>
+						</div>
 						<div class="fw-bold text-white">Sentimen Negatif</div>
 					</div>
 				</span>
