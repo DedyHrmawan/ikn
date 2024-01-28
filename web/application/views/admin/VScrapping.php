@@ -225,6 +225,8 @@
 				timeout: 0
 			}).done(function(response) {
 				alert("Yeeaaay, Proses scrapping was successful")
+
+				setTimeout(() => location.reload(true), 500)
 			})
 			.fail(function(xhr, textStatus, errorThrown) {
 				alert("Upps, there was an error when processing the request")
