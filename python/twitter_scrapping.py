@@ -22,30 +22,30 @@ CONFIG_DATABASE = {
 
 def main():
     subprocess.run(
-        f'npx tweet-harvest -o "{TW_RESULT_FILENAME}" -s "{TW_SEARCH_KEYWORD}" -l 100 --token {TW_API_TOKEN}',
+        f'npx tweet-harvest -o "{TW_RESULT_FILENAME}" -s "{TW_SEARCH_KEYWORD}" -t LATEST -l 100 --token {TW_API_TOKEN}',
         shell=True,
     )
 
-    # with open(TW_RESULT_FILENAME, "r") as file:
-    #     dataset = pandas.read_csv(file)
+    with open(f"tweets-data/{TW_RESULT_FILENAME}", "r") as file:
+        dataset = pandas.read_csv(file)
 
-    # cnx = database.connect(config, attempts=3)
+    cnx = database.connect(CONFIG_DATABASE, attempts=3)
 
-    # if cnx is None:
-    #     raise Exception("Could not connect to database")
+    if cnx is None:
+        raise Exception("Could not connect to database")
 
-    # for tweetIdx in range(len(dataset)):
-    #     with cnx.cursor() as cursor:
-    #         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    #         sql = (
-    #             "INSERT INTO tweets (tweet, created_at, updated_at) VALUES (%s, %s, %s)"
-    #         )
-    #         params = [dataset["full_text"][tweetIdx], timestamp, timestamp]
+    for tweetIdx in range(len(dataset)):
+        with cnx.cursor() as cursor:
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            sql = (
+                "INSERT INTO tweets (tweet, created_at, updated_at) VALUES (%s, %s, %s)"
+            )
+            params = [dataset["full_text"][tweetIdx], timestamp, timestamp]
 
-    #         cursor.execute(sql, params)
-    #         cnx.commit()
+            cursor.execute(sql, params)
+            cnx.commit()
 
-    # cnx.close()
+    cnx.close()
 
 
 if __name__ == "__main__":
