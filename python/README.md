@@ -35,6 +35,21 @@ Install python packages
 ```bash
   pip install -r requirement.txt
 ```
+
+Install node js packages
+
+```bash
+  npm install
+```
+
+Get Twitter [Auth Token from cookies](twitter_api_token.png) and update the TWITTER_API_TOKEN config
+
+```bash
+  ...
+  TWITTER_API_TOKEN=
+  ...
+```
+
 ## Usage
 
 When you want to use the training dataset as testing data to get the confusion matrix of the created model, use this config

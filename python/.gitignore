@@ -1,5 +1,7 @@
 .env
 .venv
+node_modules
 log
 *.pkl
 database.log
+.idea
