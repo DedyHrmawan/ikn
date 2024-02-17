@@ -117,6 +117,11 @@
 										<td class="text-dark fw-bolder text-hover-primary fs-6">
 											<?= $item->created_at ?>
 										</td>
+										<td>
+											<button type="button" onclick="onShowRecord(event)" data-id="<?= $item->id ?>" data-sentiment="<?= $item->sentiment ?>" data-preprocessed_sentiment="<?= $item->preprocessed ?>" data-expected_result="<?= $item->expected_result ?>" class="btn btn-bg-light btn-active-color-primary btn-sm m-1">
+												Detail
+											</button>
+										</td>
 									</tr>
 								<?php } ?>
 							</tbody>
@@ -127,6 +132,41 @@
 		</div>
 	</div>
 </div>
+
+<!-- Modal Detail Data Latih-->
+<div class="modal fade" id="mdlDetailDataLatih" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="mb-3">Detail Data Latih</h3>
+
+				<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+					<span class="svg-icon svg-icon-muted svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+							<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+							<rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="currentColor" />
+							<rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="currentColor" />
+						</svg></span>
+				</div>
+			</div>
+
+			<div class="modal-body">
+				<div class="d-flex flex-column mb-8 fv-row">
+					<label class="d-flex align-items-center fs-6 fw-bold mb-2">
+						<span>Tweet / Sentimen</span>
+					</label>
+					<textarea type="text" disabled class="form-control form-control-solid" name="sentiment" id="d_sentiment" cols="15" rows="5"></textarea>
+				</div>
+				<div class="d-flex flex-column mb-8 fv-row">
+					<label class="d-flex align-items-center fs-6 fw-bold mb-2">
+						<span>Preprocessed Tweet</span>
+					</label>
+					<textarea type="text" disabled class="form-control form-control-solid" name="preprocessed_sentiment" id="d_preprocessed_sentiment" cols="15" rows="5"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
@@ -153,6 +193,17 @@
 				>`
 		});
 	});
+
+	function onShowRecord(e) {
+		e.preventDefault();
+
+		const dataset = e.target.dataset;
+
+		document.getElementById('d_sentiment').value = dataset.sentiment;
+		document.getElementById('d_preprocessed_sentiment').value = dataset.preprocessed_sentiment;
+
+		$('#mdlDetailDataLatih').modal('show');
+	}
 
 	function HandleTestingPrediction(e) {
 		const res = confirm("Apakah kamu yakin ingin memulai proses prediksi data uji dengan model naive bayes?");
