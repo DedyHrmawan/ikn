@@ -10,6 +10,7 @@ from sklearn.metrics import (
     accuracy_score,
     classification_report,
     precision_recall_fscore_support,
+    confusion_matrix,
 )
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
@@ -26,7 +27,7 @@ databaseConfig = {
 }
 
 use_training_data_as_testing = bool(config.get("USE_TRAINING_DATA_FOR_TESTING", False))
-split_testing_size_ratio = float(config.get("SPLIT_TESTING_SIZE_RATIO", 0.25))  # type: ignore
+split_testing_size_ratio = float(config.get("SPLIT_TESTING_SIZE_RATIO", 0.8))  # type: ignore
 model_filename = str(config.get("NB_MODEL_FILENAME", "nb_model.pkl"))
 count_vec_filename = str(config.get("COUNT_VECTORIZER_FILENAME", "train_count_vec.pkl"))
 tfidf_transformer_filename = str(
@@ -121,10 +122,12 @@ def main():
 
     cnx.close()
 
-
 def save_model_calc_result(cnx, nb_model, y_test, y_pred):
     # Get precision, recall, fscore, and support for each class
     precision, recall, fscore, support = precision_recall_fscore_support(y_test, y_pred)
+
+    # Calculate confusion matrix
+    cm = confusion_matrix(y_test, y_pred)
 
     # Specify the label for which you want to calculate accuracy
     labels = ["Negative", "Netral", "Positive"]
@@ -138,6 +141,13 @@ def save_model_calc_result(cnx, nb_model, y_test, y_pred):
             y_test[y_test == label_id], y_pred[y_test == label_id]
         )
 
+        # Extract true positives, false positives, true negatives, false negatives
+        tn = int(cm[label_id, label_id])
+        fp = int(cm[label_id, :].sum() - tn)
+        fn = int(cm[:, label_id].sum() - tn)
+        tp = int(cm.sum() - (tn + fp + fn))
+        # tn, fp, fn, tp = cm[label_id, label_id], cm[label_id, :].sum() - cm[label_id, label_id], cm[:, label_id].sum() - cm[label_id, label_id], cm.sum() - (tn + fp + fn)
+
         # Update model accuracy into databases
         with cnx.cursor() as cursor:
             sql = "SELECT * FROM results WHERE class = %s"
@@ -150,29 +160,89 @@ def save_model_calc_result(cnx, nb_model, y_test, y_pred):
             upsert_params = []
             # checking if result with specified class is existing or not
             if result is not None:
-                upsert_sql = "UPDATE results SET precision_value = %s, accuracy_value = %s, recall_value = %s, f_measure_value = %s, updated_at = %s WHERE class = %s"
+                upsert_sql = "UPDATE results SET precision_value = %s, accuracy_value = %s, recall_value = %s, f_measure_value = %s, true_positives = %s, false_positives = %s, true_negatives = %s, false_negatives = %s, updated_at = %s WHERE class = %s"
                 upsert_params = [
                     float(precision[label_index]),  # type: ignore
                     float(accuracy),
                     float(recall[label_index]),  # type: ignore
                     float(fscore[label_index]),  # type: ignore
+                    tp,
+                    fp,
+                    tn,
+                    fn,
                     timestamp,
                     labels[label_id],
                 ]
             else:
-                upsert_sql = "INSERT INTO results (class, precision_value, accuracy_value, recall_value, f_measure_value, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                upsert_sql = "INSERT INTO results (class, precision_value, accuracy_value, recall_value, f_measure_value, true_positives, false_positives, true_negatives, false_negatives, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
                 upsert_params = [
                     labels[label_id],
                     float(precision[label_index]),  # type: ignore
                     float(accuracy),
                     float(recall[label_index]),  # type: ignore
                     float(fscore[label_index]),  # type: ignore
+                    tp,
+                    fp,
+                    tn,
+                    fn,
                     timestamp,
                     timestamp,
                 ]
 
             cursor.execute(upsert_sql, upsert_params)
             cnx.commit()
+
+# def save_model_calc_result(cnx, nb_model, y_test, y_pred):
+#     # Get precision, recall, fscore, and support for each class
+#     precision, recall, fscore, support = precision_recall_fscore_support(y_test, y_pred)
+
+#     # Specify the label for which you want to calculate accuracy
+#     labels = ["Negative", "Netral", "Positive"]
+
+#     for label_id in range(len(labels)):
+#         # Find the index of the specified label in the classes
+#         label_index = list(nb_model.classes_).index(label_id)
+
+#         # Calculate accuracy for the specified label
+#         accuracy = accuracy_score(
+#             y_test[y_test == label_id], y_pred[y_test == label_id]
+#         )
+
+#         # Update model accuracy into databases
+#         with cnx.cursor() as cursor:
+#             sql = "SELECT * FROM results WHERE class = %s"
+#             params = [labels[label_id]]
+#             cursor.execute(sql, params)
+#             result = cursor.fetchone()
+
+#             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+#             upsert_sql = ""
+#             upsert_params = []
+#             # checking if result with specified class is existing or not
+#             if result is not None:
+#                 upsert_sql = "UPDATE results SET precision_value = %s, accuracy_value = %s, recall_value = %s, f_measure_value = %s, updated_at = %s WHERE class = %s"
+#                 upsert_params = [
+#                     float(precision[label_index]),  # type: ignore
+#                     float(accuracy),
+#                     float(recall[label_index]),  # type: ignore
+#                     float(fscore[label_index]),  # type: ignore
+#                     timestamp,
+#                     labels[label_id],
+#                 ]
+#             else:
+#                 upsert_sql = "INSERT INTO results (class, precision_value, accuracy_value, recall_value, f_measure_value, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+#                 upsert_params = [
+#                     labels[label_id],
+#                     float(precision[label_index]),  # type: ignore
+#                     float(accuracy),
+#                     float(recall[label_index]),  # type: ignore
+#                     float(fscore[label_index]),  # type: ignore
+#                     timestamp,
+#                     timestamp,
+#                 ]
+
+#             cursor.execute(upsert_sql, upsert_params)
+#             cnx.commit()
 
 
 def save_preprocessing_result(cnx, datasets):

@@ -107,12 +107,82 @@
 						</table>
 					</div>
 				</div>
+				<div class="card mb-5 mb-xl-8">
+					<div class="card-header border-0 pt-5">
+						<h3 class="card-title align-items-start flex-column">
+							<span class="card-label fw-bolder fs-3 mb-1">True Positive / True Negative</span>
+						</h3>
+						<!-- <div class="card-toolbar">
+							<a href="#" class="btn btn-primary"
+								title="Buat semua data pada tabel menjadi data uji atau data latih !">Set Data Latih
+								!</a>
+						</div> -->
+					</div>
+					<div class="card-body py-3">
+						<table class="table table-rounded table-row-bordered table-row-gray-300 align-middle gs-0 gy-3" id="tabelPositifNegatif">
+							<thead>
+								<tr class="fw-bolder text-muted">
+									<th>Kelas</th>
+									<th>True Positive</th>
+									<th>False Positive</th>
+									<th>True Negative</th>
+									<th>False Negative</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach ($results as $item) { ?>
+									<tr>
+										<td class="text-dark fw-bolder text-hover-primary fs-6">
+											<?= $item->class ?>
+										</td>
+										<td class="text-dark fw-bolder text-hover-primary fs-6">
+											<?= $item->true_positives?>
+										</td>
+										<td class="text-dark fw-bolder text-hover-primary fs-6">
+											<?= $item->false_positives?>
+										</td>
+										<td class="text-dark fw-bolder text-hover-primary fs-6">
+											<?= $item->true_negatives?>
+										</td>
+										<td class="text-dark fw-bolder text-hover-primary fs-6">
+											<?= $item->false_negatives?>
+										</td>
+									</tr>
+								<?php } ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
 <script>
+	document.addEventListener('DOMContentLoaded', function() {
+		$('#tabelPositifNegatif').dataTable({
+			"language": {
+				"lengthMenu": "Tampilkan _MENU_",
+				"zeroRecords": "Tidak ada data",
+				"infoEmpty": "Tidak ada data",
+				"infoFiltered": "(filtered from _MAX_ total records)",
+				"search": "Cari",
+
+			},
+			"dom": `
+				<'row'
+					<'col-sm-6 d-flex align-items-center justify-content-start'l>
+					<'col-sm-6 d-flex align-items-center justify-content-end'f>
+				>
+				
+				<'table-responsive'tr>
+
+				<'row'
+					<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>
+					<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>
+				>`
+		});
+	});
 	document.addEventListener('DOMContentLoaded', function() {
 		$('#tabelCMatrix').dataTable({
 			"language": {
