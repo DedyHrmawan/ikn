@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./.docker/php/Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - ./web:/var/www/html
+      - ./python:/var/www/python
+    ports:
+      - 8000:80
+
+  db:
+    image: mysql:8.2.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ikn_naive_bayes
+      MYSQL_USER: ikn_naive_bayes
+      MYSQL_PASSWORD: ikn_naive_bayes
+    ports:
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - "mysql:/var/lib/mysql"
+
+volumes:
+  mysql:
+    driver: local
